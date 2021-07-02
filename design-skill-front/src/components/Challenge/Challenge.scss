@@ -1,0 +1,105 @@
+.challenge-view {
+    background: #f3f7f7;
+}
+
+.challenge-view-header {
+    box-shadow: 0.1px 1px 4px 0 #e7eeef;
+    padding: 1rem;
+    color: rgb(17, 17, 94);
+    background-color: white;
+}
+
+.container {
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.challenge-page-header {
+    padding-top: 25px;
+}
+
+.ui-tabs-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.render-list {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-self: stretch;
+}
+
+.tab-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    list-style: none;
+}
+
+.tab-item {
+    position: relative;
+    padding: 15px 30px;
+    outline-width: 0;
+    border: 0;
+}
+.tab-item.active {
+    background-color: #fff;
+}
+.tab-item-color {
+    color: #738f93;
+}
+.ui-icon-label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.panes-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.challenge-sidebar {
+    font-size: 14px;
+}
+.difficulty-label {
+    display: inline;
+    margin-right: 5px;
+    color: #738f93;
+}
+.difficulty-medium {
+    color: brown;
+}
+.difficulty-score {
+    color: #39424e;
+}
+.difficulty-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ui-tooltip-wrapper {
+    display: inline;
+}
+
+.text-link {
+    color: #097bbf;
+    cursor: pointer;
+}
+
+
+.right-pane-challenge {
+    width: 280px;
+    margin: 0 0 30px 30px;
+}
+.left-pane-challenge {
+    flex: 1;
+}
