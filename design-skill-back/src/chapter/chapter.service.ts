@@ -26,8 +26,8 @@ export class ChapterService {
         return chapterId;
     }
 
-    async updateChapterCard(chapterCardDto: UpdateChapterCardDto) {
-        const { _id, field, value } = chapterCardDto;
+    async updateChapterCard(updateChapterCardDto: UpdateChapterCardDto) {
+        const { _id, field, value } = updateChapterCardDto;
         return field === ChapterKeys.TITLE 
             ? await this.chapterModel.findByIdAndUpdate({_id, title: value})
             : await this.chapterModel.findByIdAndUpdate({_id, detail: value}); 

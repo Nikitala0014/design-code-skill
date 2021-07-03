@@ -14,3 +14,21 @@ export class ChallengeDto {
         readonly contentCode: string;
     }
 }
+
+export class ChallengeDetailsDto {
+    readonly _id: string;
+    readonly difficulty: string;
+    readonly skill: string;
+    readonly maxScore: string;
+    readonly successRatio: string;
+}
+
+export class ChallengeContentProblemDto {
+    readonly _id: string;
+    readonly contentProblem: string;
+}
+
+export class ChallengeContentCodeDto {
+    readonly _id: string;
+    readonly contentCode: string;
+}

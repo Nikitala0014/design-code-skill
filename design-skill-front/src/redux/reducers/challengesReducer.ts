@@ -20,7 +20,7 @@ export const fetchChallenges = createAsyncThunk(
     'challenges/fetchChallenges', 
     async (chapterId: string) => {
         const response = await fetch(
-            'localhost:8000/challenges/getChallenges', 
+            'localhost:8000/challenges/getChallengesByChapterId', 
             { method: 'POST', body: chapterId as any },
         );
         return response.text;
@@ -67,11 +67,11 @@ export const updateChallengeCard = createAsyncThunk(
     }
 );
 
-export const updateChallengeCardDetails = createAsyncThunk(
-    'challenges/updateChallengeCardDetails',
-    async (payload: IChallengeDetails) => {
+export const updateChallengeDetails = createAsyncThunk(
+    'challenges/updateChallengeDetails',
+    async (payload: IChallengeDetails & String) => {
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeCardDetails',
+            'localhost:8000/challenges/updateChallengeDetails',
             { method: 'UPDATE', body: payload as any },
         );
         return response.text;
@@ -93,7 +93,7 @@ export const updateChallengeContentCode = createAsyncThunk(
     'challenges/updateChallengeContentCode',
     async (contentCode: string) => {
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeContentProblem',
+            'localhost:8000/challenges/updateChallengeContentCode',
             { method: 'UPDATE', body: contentCode }
         );
         return response.text;
@@ -162,7 +162,7 @@ const challengesSlice = createSlice({
                     {challengeCard, ...challenge.details} : challenge;
             });
         },
-        challengeCardDetailsUpdated(state, action: PayloadAction<
+        challengeDetailsUpdated(state, action: PayloadAction<
             { _id: string, challengeDetails: IChallengeDetails }
         >) {
             const { _id, challengeDetails } = action.payload;
@@ -206,8 +206,8 @@ const challengesSlice = createSlice({
             .addCase(updateChallengeCard.fulfilled, (_, action) => {
                 challengeCardUpdated(action.payload as any);
             })
-            .addCase(updateChallengeCardDetails.fulfilled, (_, action) => {
-                challengeCardDetailsUpdated(action.payload as any);
+            .addCase(updateChallengeDetails.fulfilled, (_, action) => {
+                challengeDetailsUpdated(action.payload as any);
             })
             .addCase(updateChallengeContentProblem.fulfilled, (_, action) => {
                 challengeContentProblemUpdated(action.payload as any);
@@ -228,7 +228,7 @@ export const {
     challengeEditTitle,
     challengeRemoved,
     challengeCardUpdated,
-    challengeCardDetailsUpdated,
+    challengeDetailsUpdated,
     challengeContentProblemUpdated,
     challengeContentCodeUpdated,
 } = challengesSlice.actions;
