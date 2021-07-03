@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { IChallenge } from '../../interfaces/challenge.interface';
-import { content, code } from './make-do';
+import {
+    IChallenge,
+    IChallengeCard,
+    IChallengeDetails,
+} from '../../interfaces/challenge.interface';
+import { challenges } from './make-do';
 
 const initialState = {
     filters: {
@@ -9,76 +13,89 @@ const initialState = {
         difficulty: '',
     },
     chapter: '',
-    challenges: [
-        {
-            _id: '1',
-            title: 'Minimum Swaps 2',
-            status: 'unsolved',
-            details: {
-                difficulty: 'Medium',
-                skill: 'Intermediate',
-                maxScore: '40',
-                successRatio: '76.10%',
-            },
-            preview: 'Return the minimum number of swaps to sort the given array.',
-            content: {
-                contentProblem: content,
-                contentCode: code,
-            }
-        },
-        {
-            _id: '2',
-            title: '2D Array - DS',
-            status: 'unsolved',
-            details: {
-                difficulty: 'Easy',
-                skill: 'Basic',
-                maxScore: '15',
-                successRatio: '92.91%',
-            },
-            preview: 'Return the minimum number of swaps to sort the given array.',
-        },
-        {
-            _id: '3',
-            title: 'Array Manipulation',
-            status: 'unsolved',
-            details: {
-                difficulty: 'Hard',
-                skill: 'Intermediate',
-                maxScore: '60',
-                successRatio: '56.81%',
-            },
-            preview: 'Return the minimum number of swaps to sort the given array.',
-        },
-        {
-            _id: 'newChallenge',
-            title: 'Challenge Name',
-            status: 'unsolved',
-            details: {
-                difficulty: 'Hard',
-                skill: 'Intermediate',
-                maxScore: '60',
-                successRatio: '56.81%',
-            },
-            preview: 'Enter here short preview for this challenge',
-        },
-    ] as IChallenge[],
+    challenges: challenges as IChallenge[],
 };
 
-export const fetchChallenges = createAsyncThunk('challenges/fetchChallenges', async (chapterId: string) => {
-    const response = await fetch(
-        'localhost:8000/challenges/getChallenges', 
-        {method: "POST", body: chapterId as any},
-    );
-    return response.text;
-});
+export const fetchChallenges = createAsyncThunk(
+    'challenges/fetchChallenges', 
+    async (chapterId: string) => {
+        const response = await fetch(
+            'localhost:8000/challenges/getChallenges', 
+            { method: 'POST', body: chapterId as any },
+        );
+        return response.text;
+    }
+);
+
 export const saveNewChallenge = createAsyncThunk(
-    'challenges/saveNewChallenge', async (challenge: IChallenge) => {
+    'challenges/saveNewChallenge',
+     async (challenge: IChallenge) => {
         const initialChallenge = { challenge };
         const response = await fetch(
             'localhost:8000/challenges/addChallenge',
-            {method: "POST", body: initialChallenge as any}
-        )
+            { method: 'POST', body: initialChallenge as any },
+        );
+        return response.text;
+    }
+);
+
+export const removeChallenge = createAsyncThunk(
+    'challenges/removeChallenge',
+    async ({_id}: IChallenge) => {
+        const response = await fetch(
+            'localhost:8000/challenges/removeChallenge',
+            { method: 'DELETE', body: _id },
+        );
+        return response.text;
+    }
+);
+
+interface IChallengeCardUpdate {
+    _id: string;
+    field: string;
+    value: string;
+}
+
+export const updateChallengeCard = createAsyncThunk(
+    'challenges/updateChallengeCard',
+    async (payload: IChallengeCardUpdate) => {
+        const response = await fetch(
+            'localhost:8000/challenges/updateChallengeCard',
+            { method: 'UPDATE', body: payload as any },
+        );
+        return response.text;
+    }
+);
+
+export const updateChallengeCardDetails = createAsyncThunk(
+    'challenges/updateChallengeCardDetails',
+    async (payload: IChallengeDetails) => {
+        const response = await fetch(
+            'localhost:8000/challenges/updateChallengeCardDetails',
+            { method: 'UPDATE', body: payload as any },
+        );
+        return response.text;
+    }
+);
+
+export const updateChallengeContentProblem = createAsyncThunk(
+    'challenges/updateChallengeContentProblem',
+    async (contentProblem: string) => {
+        const response = await fetch(
+            'localhost:8000/challenges/updateChallengeContentProblem',
+            { method: 'UPDATE', body: contentProblem },
+        );
+        return response.text;
+    }
+);
+
+export const updateChallengeContentCode = createAsyncThunk(
+    'challenges/updateChallengeContentCode',
+    async (contentCode: string) => {
+        const response = await fetch(
+            'localhost:8000/challenges/updateChallengeContentProblem',
+            { method: 'UPDATE', body: contentCode }
+        );
         return response.text;
     }
 )
@@ -133,19 +150,74 @@ const challengesSlice = createSlice({
             });
         },
         challengeDelete(state, action: PayloadAction<string>) {
-            state.challenges = state.challenges.filter((challenge) => challenge._id !== action.payload);
+            state.challenges.filter((challenge) => challenge._id !== action.payload);
+        },
+        challengeRemoved(state, action: PayloadAction<string>) {
+            state.challenges.filter((challenge) => challenge._id !== action.payload);
+        },
+        challengeCardUpdated(state, action: PayloadAction<IChallengeCard>) {
+            const { _id, details, ...challengeCard } = action.payload;
+            state.challenges.map((challenge) => {
+                return challenge._id === _id ? 
+                    {challengeCard, ...challenge.details} : challenge;
+            });
+        },
+        challengeCardDetailsUpdated(state, action: PayloadAction<
+            { _id: string, challengeDetails: IChallengeDetails }
+        >) {
+            const { _id, challengeDetails } = action.payload;
+            state.challenges.map((challenge) => {
+                return challenge._id === _id 
+                    ? challenge.details = challengeDetails : challenge;
+            });
+        },
+        challengeContentProblemUpdated(state, action: PayloadAction<
+            { _id: string, challengeContentProblem: string }
+        >) {
+            const { _id, challengeContentProblem } = action.payload;
+            state.challenges.map((challenge) => {
+                return challenge._id === _id 
+                    ? challenge.content.contentProblem = challengeContentProblem
+                    : challenge;
+            });
+        },
+        challengeContentCodeUpdated(state, action: PayloadAction<
+            { _id: string, challengeContentCode: string }
+        >) {
+            const { _id, challengeContentCode } = action.payload;
+            state.challenges.map((challenge) => {
+                return challenge._id === _id
+                    ? challenge.content.contentCode = challengeContentCode
+                    : challenge;
+            });
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchChallenges.fulfilled, (state, action) => {
+            .addCase(fetchChallenges.fulfilled, (_, action) => {
                 challengesLoaded(action.payload as any);
             })
-            .addCase(saveNewChallenge.fulfilled, (state, action) => {
+            .addCase(saveNewChallenge.fulfilled, (_, action) => {
                 challengesAdded(action.payload as any);
             })
+            .addCase(removeChallenge.fulfilled, (_, action) => {
+                challengeRemoved(action.payload as any);
+            })
+            .addCase(updateChallengeCard.fulfilled, (_, action) => {
+                challengeCardUpdated(action.payload as any);
+            })
+            .addCase(updateChallengeCardDetails.fulfilled, (_, action) => {
+                challengeCardDetailsUpdated(action.payload as any);
+            })
+            .addCase(updateChallengeContentProblem.fulfilled, (_, action) => {
+                challengeContentProblemUpdated(action.payload as any);
+            })
+            .addCase(updateChallengeContentCode.fulfilled, (_, action) => {
+                challengeContentCodeUpdated(action.payload as any);
+            })
     }
-})
+});
+
 export const { 
     challengesLoaded, 
     challengesAdded,
@@ -154,6 +226,11 @@ export const {
     challengeEdit,
     challengeDelete,
     challengeEditTitle,
+    challengeRemoved,
+    challengeCardUpdated,
+    challengeCardDetailsUpdated,
+    challengeContentProblemUpdated,
+    challengeContentCodeUpdated,
 } = challengesSlice.actions;
 
 export default challengesSlice.reducer;

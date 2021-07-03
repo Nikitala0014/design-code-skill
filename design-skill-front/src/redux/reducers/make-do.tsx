@@ -74,3 +74,58 @@ function main() {
     ws.end();
 }
 `
+
+export const challenges = [
+    {
+        _id: '1',
+        title: 'Minimum Swaps 2',
+        status: 'unsolved',
+        details: {
+            difficulty: 'Medium',
+            skill: 'Intermediate',
+            maxScore: '40',
+            successRatio: '76.10%',
+        },
+        preview: 'Return the minimum number of swaps to sort the given array.',
+        content: {
+            contentProblem: content,
+            contentCode: code,
+        }
+    },
+    {
+        _id: '2',
+        title: '2D Array - DS',
+        status: 'unsolved',
+        details: {
+            difficulty: 'Easy',
+            skill: 'Basic',
+            maxScore: '15',
+            successRatio: '92.91%',
+        },
+        preview: 'Return the minimum number of swaps to sort the given array.',
+    },
+    {
+        _id: '3',
+        title: 'Array Manipulation',
+        status: 'unsolved',
+        details: {
+            difficulty: 'Hard',
+            skill: 'Intermediate',
+            maxScore: '60',
+            successRatio: '56.81%',
+        },
+        preview: 'Return the minimum number of swaps to sort the given array.',
+    },
+    {
+        _id: 'newChallenge',
+        title: 'Challenge Name',
+        status: 'unsolved',
+        details: {
+            difficulty: 'Hard',
+            skill: 'Intermediate',
+            maxScore: '60',
+            successRatio: '56.81%',
+        },
+        preview: 'Enter here short preview for this challenge',
+    },
+];

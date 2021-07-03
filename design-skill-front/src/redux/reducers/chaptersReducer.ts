@@ -17,16 +17,42 @@ const initialState = {
     course: 'interview',
 };
 
-export const fetchChapters = createAsyncThunk('chapters/fetchChapters', async () => {
+export const fetchChapters = createAsyncThunk('chapters/fetchChapters', 
+async () => {
     const response = await fetch('localhost:8000/chapters/getChapters');
     return response.text;
-})
+});
 
-export const saveNewChapter = createAsyncThunk('chapters/saveNewChapter', async (chapter: IChapter) => {
+export const saveNewChapter = createAsyncThunk('chapters/saveNewChapter', 
+async (chapter: IChapter) => {
     const initialChapter = { chapter };
     const response = await fetch(
         'localhost:8000/chapters/addChapter', 
-        {method: 'POST', body: initialChapter as any},
+        { method: 'POST', body: initialChapter as any },
+    );
+    return response.text;
+});
+
+export const removeChapter = createAsyncThunk('chapters/removeChapter', 
+async ({_id}: IChapter) => {
+    const response = await fetch(
+        'localhost:8000/chapters/removeChapter',
+        { method: 'POST', body: _id },
+    );
+    return response.text;
+});
+
+interface IChapterCardUpdate {
+    _id: string;
+    field: string;
+    value: string;
+}
+
+export const updateChapterCard = createAsyncThunk('chapters/updateChapterCard',
+async(payloud: IChapterCardUpdate) => {
+    const response = await fetch(
+        'localhost:8000/chapters/updateChapterCard',
+        { method: 'POST', body: payloud as any },
     );
     return response.text;
 })
@@ -54,22 +80,41 @@ const chaptersSlice = createSlice({
             state.chapters = chapters;
         },
         chapterCardEditDetail(state, action: PayloadAction<IChapter>) {
-            const {_id, detail} = action.payload;
+            const { _id, detail } = action.payload;
             state.chapters.map((chapter: IChapter) => {
                 return chapter._id === _id ? chapter.detail = detail : chapter;
             })
         },
         deleteChapter(state, action: PayloadAction<string>) {
-            state.chapters = state.chapters.filter((chapter) => chapter._id !== action.payload);
+            state.chapters = state.chapters.filter(
+                (chapter) => chapter._id !== action.payload);
+        },
+        chapterRemoved(state, action: PayloadAction<string>) {
+            state.chapters = state.chapters.filter(
+                (chapter) => chapter._id !== action.payload)
+        },
+        chapterCardUpdated(state, action: PayloadAction<
+            { _id: string, chapterUpdated: IChapter }
+        >) {
+            const { _id, chapterUpdated } = action.payload;
+            state.chapters.map((chapter) => {
+                return chapter._id === _id ? chapterUpdated : chapter;
+            })
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(saveNewChapter.fulfilled, (state, action) => {
-                chaptersAdded(action.payload as any)
+            .addCase(saveNewChapter.fulfilled, (_, action) => {
+                chaptersAdded(action.payload as any);
             })
-            .addCase(fetchChapters.fulfilled, (state, action) => {
-                chaptersLoaded(action.payload as any)
+            .addCase(fetchChapters.fulfilled, (_, action) => {
+                chaptersLoaded(action.payload as any);
+            })
+            .addCase(removeChapter.fulfilled, (_, action) => {
+                chapterRemoved(action.payload as any);
+            })
+            .addCase(updateChapterCard.fulfilled, (_, action) => {
+                chapterCardUpdated(action.payload as any)
             })
     }
 })
@@ -79,7 +124,9 @@ export const {
     chaptersAdded, 
     chapterCardEditTitle, 
     chapterCardEditDetail,
-    deleteChapter
+    deleteChapter,
+    chapterRemoved,
+    chapterCardUpdated,
 } = chaptersSlice.actions;
 
 export default chaptersSlice.reducer;
