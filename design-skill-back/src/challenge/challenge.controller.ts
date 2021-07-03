@@ -41,21 +41,21 @@ export class ChallengeController {
     @Put()
     updateChallengeDetails (
         @Body() challengeDetailsDto: ChallengeDetailsDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         return this.challengeService.updateChallengeDetails(challengeDetailsDto);
     }
 
     @Put()
     updateChallengeContentProblem (
         @Body() contentProblemDto: ChallengeContentProblemDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         return this.challengeService.updateChallengeContentProblem(contentProblemDto);
     }
 
     @Put()
     updateChallengeContentCode (
         @Body() contentCodeDto: ChallengeContentCodeDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         return this.challengeService.updateChallengeContentCode(contentCodeDto);
     }
 }

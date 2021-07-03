@@ -15,7 +15,6 @@ const initialState = {
     chapter: '',
     challenges: challenges as IChallenge[],
 };
-
 export const fetchChallenges = createAsyncThunk(
     'challenges/fetchChallenges', 
     async (chapterId: string) => {
@@ -80,10 +79,10 @@ export const updateChallengeDetails = createAsyncThunk(
 
 export const updateChallengeContentProblem = createAsyncThunk(
     'challenges/updateChallengeContentProblem',
-    async (contentProblem: string) => {
+    async (payload: {_id: string, contentProblem: string}) => {
         const response = await fetch(
             'localhost:8000/challenges/updateChallengeContentProblem',
-            { method: 'UPDATE', body: contentProblem },
+            { method: 'UPDATE', body: payload as any },
         );
         return response.text;
     }
@@ -91,12 +90,12 @@ export const updateChallengeContentProblem = createAsyncThunk(
 
 export const updateChallengeContentCode = createAsyncThunk(
     'challenges/updateChallengeContentCode',
-    async (contentCode: string) => {
+    async (payload: {_id: string, contentCode: string}) => {
         const response = await fetch(
             'localhost:8000/challenges/updateChallengeContentCode',
-            { method: 'UPDATE', body: contentCode }
+            { method: 'UPDATE', body: payload as any }
         );
-        return response.text;
+        return response.text
     }
 )
 

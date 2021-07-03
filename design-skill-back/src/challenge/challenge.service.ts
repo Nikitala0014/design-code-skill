@@ -44,25 +44,23 @@ export class ChallengeService {
 
     async updateChallengeDetails (
         challengeDetailsDto: ChallengeDetailsDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         const { _id, ...details } = challengeDetailsDto;
-        await this.challengeModel.findByIdAndUpdate({_id, details: details});
-        return HttpStatus.OK;
+        return await this.challengeModel.findByIdAndUpdate({_id, details: details});
     }
 
     async updateChallengeContentProblem (
         challengeContentProblem: ChallengeContentProblemDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         const { _id, contentProblem } = challengeContentProblem;
-        await this.challengeModel.findByIdAndUpdate({_id, contentProblem})
-        return HttpStatus.OK;
+        return await this.challengeModel.findByIdAndUpdate({_id, contentProblem})
     }
 
     async updateChallengeContentCode (
         challengeContentCode: ChallengeContentCodeDto,
-    ): Promise<HttpStatus> {
+    ): Promise<IChallenge> {
         const { _id, contentCode } = challengeContentCode;
-        await this.challengeModel.findByIdAndUpdate({_id, contentCode});
-        return HttpStatus.OK;
+        return await this.challengeModel
+            .findByIdAndUpdate({_id, contentCode});
     }
 }
