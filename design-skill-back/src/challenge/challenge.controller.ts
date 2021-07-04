@@ -1,24 +1,21 @@
-import { Controller, Body, Get, Post, Delete, Put, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Get, Post, Delete, Put, HttpStatus, Param } from '@nestjs/common';
 
 import { ChallengeService } from './challenge.service';
-import { 
-    ChallengeDto, 
+import {
+    ChallengeDto,
     CreateChallengeDto,
     UpdateChallengeCardDto,
     ChallengeDetailsDto,
-    ChallengeContentProblemDto,
-    ChallengeContentCodeDto,
 } from './dto'
-import { ChapterDto } from 'src/chapter/dto/chapter.dto';
 import { IChallenge } from './interfaces';
 
 @Controller('challenge')
 export class ChallengeController {
     constructor(private readonly challengeService: ChallengeService) {}
 
-    @Get()
-    getChallengesByChapterId (@Body() {_id}: ChapterDto): Promise<IChallenge[]> {
-        return this.challengeService.gelChallengesByChapterId(_id);
+    @Get(':chapterId')
+    getChallengesByChapterId (@Param('chapterId') chapterId: string): Promise<IChallenge[]> {
+        return this.challengeService.gelChallengesByChapterId(chapterId);
     }
 
     @Post()
@@ -26,36 +23,40 @@ export class ChallengeController {
         return this.challengeService.addChallenge(createChallengeDto);
     }
 
-    @Delete()
-    removeChallenge (@Body() { _id }: ChallengeDto): Promise<HttpStatus> {
+    @Delete(':_id')
+    removeChallenge (@Param('_id') _id: ChallengeDto["_id"]): Promise<HttpStatus> {
         return this.challengeService.removeChallenge(_id);
     }
 
-    @Put()
+    @Put(':_id')
     updateChallengeCard (
-        @Body() challengeCardDto: UpdateChallengeCardDto
+        @Param('_id') _id: ChallengeDto["_id"],
+        @Body() updateChallengeCardDto: UpdateChallengeCardDto,
     ): Promise<IChallenge> {
-        return this.challengeService.updateChallengeCard(challengeCardDto);
+        return this.challengeService.updateChallengeCard(_id, updateChallengeCardDto);
     }
 
-    @Put()
+    @Put(':_id')
     updateChallengeDetails (
+        @Param('_id') _id: ChallengeDto["_id"],
         @Body() challengeDetailsDto: ChallengeDetailsDto,
     ): Promise<IChallenge> {
-        return this.challengeService.updateChallengeDetails(challengeDetailsDto);
+        return this.challengeService.updateChallengeDetails(_id, challengeDetailsDto);
     }
 
-    @Put()
+    @Put(':_id')
     updateChallengeContentProblem (
-        @Body() contentProblemDto: ChallengeContentProblemDto,
+        @Param('_id') _id: ChallengeDto["_id"],
+        @Body() contentProblem: ChallengeDto["content"]["contentProblem"],
     ): Promise<IChallenge> {
-        return this.challengeService.updateChallengeContentProblem(contentProblemDto);
+        return this.challengeService.updateChallengeContentProblem(_id, contentProblem);
     }
 
-    @Put()
+    @Put(':_id')
     updateChallengeContentCode (
-        @Body() contentCodeDto: ChallengeContentCodeDto,
+        @Param('_id') _id: ChallengeDto["_id"],
+        @Body() contentCode: ChallengeDto["content"]["contentCode"],
     ): Promise<IChallenge> {
-        return this.challengeService.updateChallengeContentCode(contentCodeDto);
+        return this.challengeService.updateChallengeContentCode(_id, contentCode);
     }
 }

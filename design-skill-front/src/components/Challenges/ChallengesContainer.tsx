@@ -3,13 +3,13 @@ import './Challenges.style.scss';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { RootState, useAppDispatch } from '../../redux/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import { IChallenge } from '../../interfaces/challenge.interface';
 import ChallengeCard from '../Cards/ChallengeCard/ChallengeCardContainer';
 import {
     newStatusFilter,
     newDifficultyFilter,
-} from '../../redux/reducers/challengesReducer';
+} from '../../store/reducers/challengesReducer';
 
 import { ChallengesView } from './ChallengesView';
 

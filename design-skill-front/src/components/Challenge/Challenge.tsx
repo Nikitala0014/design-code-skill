@@ -3,7 +3,7 @@ import './Challenge.scss';
 
 import ChallengeContent from './ChallengeContent/ChallengeContent';
 
-import { content } from '../../redux/reducers/make-do';
+import { content } from '../../store/reducers/make-do';
 
 const contentProblem = document.createElement('div');
 contentProblem.innerHTML = content

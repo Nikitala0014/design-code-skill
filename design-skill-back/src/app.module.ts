@@ -3,13 +3,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ChapterController } from './chapter/chapter.controller';
 import { ChapterModule } from './chapter/chapter.module';
 import { ChallengeModule } from './challenge/challenge.module';
+import { EditorModule } from './editor/editor.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/design'), ChapterModule, ChallengeModule],
-  controllers: [AppController, ChapterController],
+  imports: [MongooseModule
+    .forRoot(
+      'mongodb+srv://bruce00:goodlife@cluster0.kbrtk.mongodb.net/design?retryWrites=true&w=majority'), 
+    ChapterModule, ChallengeModule, EditorModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

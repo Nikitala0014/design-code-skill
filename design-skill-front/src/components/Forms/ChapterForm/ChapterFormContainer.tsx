@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../redux/store';
+import { useAppDispatch } from '../../../store/store';
 
 import { ChapterFormView } from './ChapterFormView';
-import { saveNewChapter } from '../../../redux/reducers/chaptersReducer';
+import { saveNewChapter } from '../../../store/reducers/chaptersReducer';
 
 export default function ChapterForm() {
     const [title, setTitle] = useState('');

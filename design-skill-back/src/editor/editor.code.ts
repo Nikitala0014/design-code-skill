@@ -1,0 +1,1 @@
+export default function rowCode (data) {return data}

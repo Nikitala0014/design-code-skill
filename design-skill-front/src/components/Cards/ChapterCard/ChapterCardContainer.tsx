@@ -2,14 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import './ChapterCard.style.scss'
 
-import { RootState, useAppDispatch } from '../../../redux/store';
+import { RootState, useAppDispatch } from '../../../store/store';
 import { 
     chapterCardEditTitle, 
     chapterCardEditDetail, 
     deleteChapter, 
     chaptersAdded,
-} from '../../../redux/reducers/chaptersReducer';
-import { fetchChallenges } from '../../../redux/reducers/challengesReducer';
+} from '../../../store/reducers/chaptersReducer';
+import { fetchChallenges } from '../../../store/reducers/challengesReducer';
 import { IChapter } from '../../../interfaces/chapter.interface';
 
 import { ChapterCardView } from './ChapterCardView';

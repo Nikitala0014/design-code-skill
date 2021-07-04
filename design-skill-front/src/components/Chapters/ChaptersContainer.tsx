@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../redux/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import './Chapters.style.scss';
 
 import ChapterCard from '../Cards/ChapterCard/ChapterCardContainer';
-import { fetchChapters } from '../../redux/reducers/chaptersReducer';
+import { fetchChapters } from '../../store/reducers/chaptersReducer';
 
 import { ChaptersView } from './ChaptersView';
 import { IChapter } from '../../interfaces/chapter.interface';

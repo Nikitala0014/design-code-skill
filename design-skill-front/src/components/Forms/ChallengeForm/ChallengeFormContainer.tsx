@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../redux/store';
+import { useAppDispatch } from '../../../store/store';
 
 import { ChallengeFormView } from './ChallengeFormView';
-import { saveNewChallenge } from '../../../redux/reducers/challengesReducer';
+import { saveNewChallenge } from '../../../store/reducers/challengesReducer';
 
 export default function ChallengeForm() {
     const [title, setTitle] = useState('');

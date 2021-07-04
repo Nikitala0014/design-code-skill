@@ -1,8 +1,6 @@
-import { ObjectId } from "mongoose";
-
 export interface IChallenge {
-    readonly _id: ObjectId;
-    readonly chapterId: ObjectId;
+    readonly _id: string;
+    readonly chapterId: string;
     readonly title: string;
     readonly status: string;
     readonly details: IChallengeDetails;

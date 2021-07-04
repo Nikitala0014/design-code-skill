@@ -19,8 +19,8 @@ export const fetchChallenges = createAsyncThunk(
     'challenges/fetchChallenges', 
     async (chapterId: string) => {
         const response = await fetch(
-            'localhost:8000/challenges/getChallengesByChapterId', 
-            { method: 'POST', body: chapterId as any },
+            `localhost:8000/challenges/getChallengesByChapterId/${chapterId}`, 
+            { method: 'POST' },
         );
         return response.text;
     }
@@ -40,10 +40,10 @@ export const saveNewChallenge = createAsyncThunk(
 
 export const removeChallenge = createAsyncThunk(
     'challenges/removeChallenge',
-    async ({_id}: IChallenge) => {
+    async (_id: string) => {
         const response = await fetch(
-            'localhost:8000/challenges/removeChallenge',
-            { method: 'DELETE', body: _id },
+            `localhost:8000/challenges/removeChallenge/${_id}`,
+            { method: 'DELETE' },
         );
         return response.text;
     }
@@ -51,49 +51,67 @@ export const removeChallenge = createAsyncThunk(
 
 interface IChallengeCardUpdate {
     _id: string;
-    field: string;
-    value: string;
+    challengeCardToUpdate: {field: string, value: string}
 }
 
 export const updateChallengeCard = createAsyncThunk(
     'challenges/updateChallengeCard',
     async (payload: IChallengeCardUpdate) => {
+        const { _id, challengeCardToUpdate } = payload;
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeCard',
-            { method: 'UPDATE', body: payload as any },
+            `localhost:8000/challenges/updateChallengeCard/${_id}`,
+            { method: 'UPDATE', body: challengeCardToUpdate as any },
         );
         return response.text;
     }
 );
+
+interface IChallengeDetailsUpdate {
+    _id: string;
+    details: IChallengeDetails
+}
 
 export const updateChallengeDetails = createAsyncThunk(
     'challenges/updateChallengeDetails',
-    async (payload: IChallengeDetails & String) => {
+    async (payload: IChallengeDetailsUpdate) => {
+        const { _id, details } = payload;
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeDetails',
-            { method: 'UPDATE', body: payload as any },
+            `localhost:8000/challenges/updateChallengeDetails/${_id}`,
+            { method: 'UPDATE', body: details as any },
         );
         return response.text;
     }
 );
+
+interface ContentProblemUpdate {
+    _id: string,
+    contentProblem: string,
+}
 
 export const updateChallengeContentProblem = createAsyncThunk(
     'challenges/updateChallengeContentProblem',
-    async (payload: {_id: string, contentProblem: string}) => {
+    async (payload: ContentProblemUpdate) => {
+        const { _id, contentProblem } = payload
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeContentProblem',
-            { method: 'UPDATE', body: payload as any },
+            `localhost:8000/challenges/updateChallengeContentProblem/${_id}`,
+            { method: 'UPDATE', body: contentProblem as any },
         );
         return response.text;
     }
 );
 
+interface ContentCodeUpdate {
+    _id: string,
+    contentCode: string,
+}
+
 export const updateChallengeContentCode = createAsyncThunk(
     'challenges/updateChallengeContentCode',
-    async (payload: {_id: string, contentCode: string}) => {
+    async (payload: ContentCodeUpdate) => {
+        const { _id, contentCode } = payload;
         const response = await fetch(
-            'localhost:8000/challenges/updateChallengeContentCode',
-            { method: 'UPDATE', body: payload as any }
+            `localhost:8000/challenges/updateChallengeContentCode/${_id}`,
+            { method: 'UPDATE', body: contentCode as any }
         );
         return response.text
     }

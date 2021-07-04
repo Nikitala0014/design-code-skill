@@ -5,7 +5,7 @@ import Chapters from './components/Chapters/ChaptersContainer';
 import Challenges from './components/Challenges/ChallengesContainer';
 import Challenge from './components/Challenge/Challenge';
 import { useSelector } from 'react-redux';
-import { RootState } from './redux/store';
+import { RootState } from './store/store';
 
 function App() {
   const course = useSelector((state: RootState) => state.chapters.course);

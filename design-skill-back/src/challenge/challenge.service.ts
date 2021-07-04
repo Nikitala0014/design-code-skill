@@ -1,10 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 
 import { 
-    ChallengeContentCodeDto,
-    ChallengeContentProblemDto,
     ChallengeDetailsDto,
     ChallengeDto, 
     CreateChallengeDto, 
@@ -18,7 +16,7 @@ import { EChallengeKeys } from './constants';
 export class ChallengeService {
     constructor (@InjectModel(Challenge.name) private challengeModel: Model<ChallengeDocument>) {}
 
-    gelChallengesByChapterId (_id: ObjectId): Promise<IChallenge[]> {
+    gelChallengesByChapterId (_id: string): Promise<IChallenge[]> {
         return this.challengeModel.find({chapterId: _id}).exec();
     }
 
@@ -33,34 +31,33 @@ export class ChallengeService {
     }
 
     async updateChallengeCard (
+        _id: ChallengeDto["_id"],
         updateChallengeCardDto: UpdateChallengeCardDto,
     ): Promise<IChallenge> 
     {
-        const { _id, field, value } = updateChallengeCardDto;
+        const { field, value } = updateChallengeCardDto;
         return field === EChallengeKeys.TITLE
             ? await this.challengeModel.findByIdAndUpdate({_id, title: value})
             : await this.challengeModel.findByIdAndUpdate({_id, preview: value});
     }
 
     async updateChallengeDetails (
+        _id: ChallengeDto["_id"],
         challengeDetailsDto: ChallengeDetailsDto,
     ): Promise<IChallenge> {
-        const { _id, ...details } = challengeDetailsDto;
-        return await this.challengeModel.findByIdAndUpdate({_id, details: details});
+        return await this.challengeModel
+            .findByIdAndUpdate({_id, details: challengeDetailsDto});
     }
 
     async updateChallengeContentProblem (
-        challengeContentProblem: ChallengeContentProblemDto,
+        _id: ChallengeDto["_id"], contentProblem: string,
     ): Promise<IChallenge> {
-        const { _id, contentProblem } = challengeContentProblem;
         return await this.challengeModel.findByIdAndUpdate({_id, contentProblem})
     }
 
     async updateChallengeContentCode (
-        challengeContentCode: ChallengeContentCodeDto,
+        _id: ChallengeDto["_id"], contentCode: string,
     ): Promise<IChallenge> {
-        const { _id, contentCode } = challengeContentCode;
-        return await this.challengeModel
-            .findByIdAndUpdate({_id, contentCode});
+        return await this.challengeModel.findByIdAndUpdate({_id, contentCode});
     }
 }

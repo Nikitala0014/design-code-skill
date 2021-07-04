@@ -3,7 +3,7 @@ import './ChallengeContent.scss';
 
 import Editor from '../../Editor/Editor';
 
-import { code } from '../../../redux/reducers/make-do';
+import { code } from '../../../store/reducers/make-do';
 
 export default function ChallengeContent({children}) {
 

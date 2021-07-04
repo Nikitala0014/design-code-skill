@@ -1,15 +1,37 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, ObjectId } from 'mongoose';
+import { Document } from 'mongoose';
 
 export type ChallengeDocument = Challenge & Document;
+
+class Details {
+    @Prop()
+    difficulty: string;
+    
+    @Prop()
+    skill: string;
+
+    @Prop()
+    maxScore: string;
+
+    @Prop()
+    successRatio: string;
+}
+
+class Content {
+    @Prop()
+    contentProblem: string;
+
+    @Prop()
+    contentCode: string;
+}
 
 @Schema()
 export class Challenge {
     @Prop()
-    _id: ObjectId;
+    _id: string;
 
     @Prop()
-    chapterId: ObjectId;
+    chapterId: string;
 
     @Prop()
     title: string;
@@ -17,22 +39,14 @@ export class Challenge {
     @Prop()
     status: string;
 
-    @Prop()
-    details: {
-        difficulty: string;
-        skill: string;
-        maxScore: string;
-        successRatio: string;
-    }
+    @Prop(Details)
+    details: Details;
 
     @Prop()
     preview: string;
 
-    @Prop()
-    content: {
-        contentProblem: string;
-        contentCode: string;
-    };
+    @Prop(Content)
+    content: Content;
 }
 
 export const ChallengeSchema = SchemaFactory.createForClass(Challenge);
