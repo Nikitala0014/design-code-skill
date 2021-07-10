@@ -68,6 +68,10 @@ export default function ChallengeCard({_id, route, classNameChallenge}) {
             maxScore: details?.maxScore as string,
             successRatio: details?.successRatio as string,
         },
+        content: {
+            contentProblem: '',
+            contentCode: '',
+        },
         preview: preview as string,
     }));
     

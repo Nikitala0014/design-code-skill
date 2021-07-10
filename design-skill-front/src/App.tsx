@@ -1,9 +1,11 @@
 import './App.scss';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
+import Navbar from './components/Navbar/Navbar';
 import Chapters from './components/Chapters/ChaptersContainer';
 import Challenges from './components/Challenges/ChallengesContainer';
 import Challenge from './components/Challenge/Challenge';
+import Profile from './components/Profile/ProfileContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 
@@ -14,7 +16,11 @@ function App() {
 
   return (
     <div className="app">
+      <Navbar />
       <Switch>
+        <Route exact path={`/`}>
+          <Profile />
+        </Route>
         <Route exact path={`/${course}`}>
           <Chapters />
         </Route>

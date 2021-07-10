@@ -5,7 +5,7 @@ import { IChapter } from '../../interfaces/chapter.interface';
 
 // type SliceState = { state: 'loading' } | { state: 'finished', data: IChapter[] }
 const initialState = {
-    role: 'Root',
+    role: 'User',
     loading: 'Loading',
     chapters: [
         { _id: '1', title: 'Arrays', detail: '70% of companies test this subject' },

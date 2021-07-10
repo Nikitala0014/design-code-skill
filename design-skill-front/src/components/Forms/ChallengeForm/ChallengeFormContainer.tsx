@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../store/store';
+// import { useAppDispatch } from '../../../store/store';
 
 import { ChallengeFormView } from './ChallengeFormView';
-import { saveNewChallenge } from '../../../store/reducers/challengesReducer';
+// import { saveNewChallenge } from '../../../store/reducers/challengesReducer';
 
 export default function ChallengeForm() {
     const [title, setTitle] = useState('');
@@ -14,11 +14,11 @@ export default function ChallengeForm() {
     });
     const [status, setStatus] = useState('');
     const [preview, setPreview] = useState('');
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(saveNewChallenge({title, details, status, preview}));
+        // dispatch(saveNewChallenge({title, details, status, preview}));
         setTitle('');
         setDetails({difficulty: '', skill: '', maxScore: '', successRatio: ''});
         setPreview('');
