@@ -98,7 +98,7 @@ export const ChallengeCardView = ({challenge, role, callbacks, style, chapter, c
                     <span className="bookmark-cta"></span>
                     <div className="btn-container">
                         {style === 'challenge-card' &&
-                            <Link to={`/${course}/arrays/challenges/${title}`}>
+                            <Link to={`/${course}/arrays/challenges/${title}/problem`}>
                                 <button className="btn-challenge">Solve Challenge</button>
                             </Link>
                         }

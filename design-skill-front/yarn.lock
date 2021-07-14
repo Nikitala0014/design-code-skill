@@ -1256,6 +1256,31 @@
     "@codemirror/state" "^0.18.3"
     "@codemirror/view" "^0.18.0"
 
+"@codemirror/lang-css@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-css/-/lang-css-0.18.0.tgz#f82e7d38bd84da8ffa73188f7a268aba00e63737"
+  integrity sha512-kkU4Ug387eJoCTDDkMbXrcPBMiJ0lFWbvDaFHIuJtrMgDXJzSQ/ehx6Ife5PUBfuLU/x1JQUBdmXhW1TJzfHug==
+  dependencies:
+    "@codemirror/autocomplete" "^0.18.0"
+    "@codemirror/highlight" "^0.18.0"
+    "@codemirror/language" "^0.18.0"
+    "@codemirror/state" "^0.18.0"
+    lezer-css "^0.13.0"
+
+"@codemirror/lang-html@^0.18.1":
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-html/-/lang-html-0.18.1.tgz#2ca70a2559a120c9d3e5e2a46268fc979256de28"
+  integrity sha512-NF/QkSiGiDQGF99x/gcr1oybLQRqspQ+N8HH1SSihkKjmrQBOi7yZ4jUHAmmDEU43ujDqueGZfdqg0WhyOx2CA==
+  dependencies:
+    "@codemirror/autocomplete" "^0.18.0"
+    "@codemirror/highlight" "^0.18.0"
+    "@codemirror/lang-css" "^0.18.0"
+    "@codemirror/lang-javascript" "^0.18.0"
+    "@codemirror/language" "^0.18.0"
+    "@codemirror/state" "^0.18.0"
+    lezer-html "^0.13.5"
+    lezer-tree "^0.13.0"
+
 "@codemirror/lang-javascript@^0.18.0":
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/@codemirror/lang-javascript/-/lang-javascript-0.18.0.tgz#e077b6601a076e1b4471c06ffc2b77dce8815c0e"
@@ -7370,6 +7395,20 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lezer-css@^0.13.0:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/lezer-css/-/lezer-css-0.13.1.tgz#272582af7616318a7e0b6432fdf943c35499c96b"
+  integrity sha512-ke56tjG17IZ+EFiY50P2WinjhgZQB7OecRVZmYQbVuwv5iUdLemA4vLjaFsAbgoSg+4pfOms7Ns9nItoJcmFpg==
+  dependencies:
+    lezer "^0.13.0"
+
+lezer-html@^0.13.5:
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/lezer-html/-/lezer-html-0.13.6.tgz#e9bc4489b96c9c671efcb2455cbf08aa4ec09cb9"
+  integrity sha512-FY8ULPsyrbxSCre95hqU69ydCIbjRKoAwWSYbuBL7om6XmQ0C/M9PxV2NToWIgYGK5Yr5MzrsK/H7vsdJGpB2g==
+  dependencies:
+    lezer "^0.13.3"
+
 lezer-javascript@^0.13.0:
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/lezer-javascript/-/lezer-javascript-0.13.4.tgz#f2b36e83bf02cce6df05601133134357133be76e"
@@ -7382,7 +7421,7 @@ lezer-tree@^0.13.0, lezer-tree@^0.13.2:
   resolved "https://registry.yarnpkg.com/lezer-tree/-/lezer-tree-0.13.2.tgz#00f4671309b15c27b131f637e430ce2d4d5f7065"
   integrity sha512-15ZxW8TxVNAOkHIo43Iouv4zbSkQQ5chQHBpwXcD2bBFz46RB4jYLEEww5l1V0xyIx9U2clSyyrLes+hAUFrGQ==
 
-lezer@^0.13.0, lezer@^0.13.4:
+lezer@^0.13.0, lezer@^0.13.3, lezer@^0.13.4:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/lezer/-/lezer-0.13.5.tgz#6000536bca7e24a5bd62e8cb4feff28b37e7dd8f"
   integrity sha512-cAiMQZGUo2BD8mpcz7Nv1TlKzWP7YIdIRrX41CiP5bk5t4GHxskOxWUx2iAOuHlz8dO+ivbuXr0J1bfHsWD+lQ==

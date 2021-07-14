@@ -1,4 +1,28 @@
-export const content = `
+export const childrenEditorial = `
+<ol>
+    <li>
+        The idea is that if  occupies  position,  occupies  position and so on, 
+        then there will be some integer  which will occupy  position. 
+        So, this forms a cycle.
+    </li>
+    <li>
+        So, if any element  is not at its correct position, we shift it to its correct 
+        position , then shift  to its correct position  and so on. So, if  is the length 
+        of the cycle (number of elements in the cycle), then it will require a minimum of  
+        swaps to rearrange the elements of the cycle to their correct positions.
+    </li>
+    <li>
+        We find all such cycles and compute our answer.
+    </li>
+</ol>
+<p>
+    The correct positions of all the elements can be found by sorting the array 
+    by value and keeping track of the old and new positions. You may gain more clarity 
+    by the setters solution.
+</p>
+`
+
+export const childrenProblem = `
     <p>You are given an unordered array consisting of consecutive integers -
     [1, 2, 3, ..., n] without any duplicates. You are allowed to swap any 
     two elements.  Find the minimum number of swaps required to sort the 
@@ -88,7 +112,7 @@ export const challenges = [
         },
         preview: 'Return the minimum number of swaps to sort the given array.',
         content: {
-            contentProblem: content,
+            contentProblem: childrenProblem,
             contentCode: code,
         }
     },

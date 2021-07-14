@@ -1,17 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 import { EditorState, EditorView, basicSetup } from '@codemirror/basic-setup';
 import { javascript } from '@codemirror/lang-javascript';
+import { html } from '@codemirror/lang-html';
 import { ViewUpdate } from '@codemirror/view';
 
-export default function Editor({handleSubmit, code}) {
+export default function Editor({code, lang}) {
     const editorRef = useRef(document.createElement('div'));
 
+    const langToUse = lang === 'javascript' ? javascript() : html();
     const startState = EditorState.create({
         doc: code,
         extensions: [
             basicSetup, 
-            javascript(),
+            langToUse,
             EditorView.updateListener.of((v: ViewUpdate) => {
                 const prevState = v.startState.doc.toString();
                 const newState = v.state.doc.toString();
@@ -23,6 +25,7 @@ export default function Editor({handleSubmit, code}) {
                     background: "white",
                     color: "#4d41d644",
                 },
+                ".cm-content": {background: "white !important"},
                 ".cm-selectionBackground": {
                     background: "rgba(50, 50, 168, 0.20) !important",
                 },
@@ -45,6 +48,11 @@ export default function Editor({handleSubmit, code}) {
         parent: editorRef.current
     });
 
+    useEffect(() => {
+        return () => {
+            view.dom.remove()
+        }
+    })
     return (
         <>
             <div ref={ref => ref?.appendChild(view.dom)} className="editor"></div>

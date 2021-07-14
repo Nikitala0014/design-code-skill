@@ -5,11 +5,17 @@
   box-sizing: border-box;
 }
 
+pre {
+  margin: 0;
+  font-weight: 400;
+}
+
 /* Убираем внутренние отступы */
 ul[class],
 ol[class] {
   padding: 0;
 }
+
 
 /* Убираем внешние отступы */
 body,

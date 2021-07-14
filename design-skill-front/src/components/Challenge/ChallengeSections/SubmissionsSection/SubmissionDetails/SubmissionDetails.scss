@@ -1,0 +1,57 @@
+.submission-details-wrapper {
+    background-color: white;
+    padding: 30px;
+    font-size: 18px;
+}
+
+.submission-header {
+    font-size: 14px;
+}
+
+.sibmitted-at {
+    margin-bottom: 10px;
+}
+
+.submission-score, .status-wrap {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.status-wrap {
+    font-weight: 500;
+}
+
+.code-block {
+    margin-top: 30px;
+}
+
+.section-title {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.code-wrap {
+    margin-top: 20px;
+    border: 1px solid #b7c9cc;
+    font-size: 14px;
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.label {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 0;
+    font-weight: 300;
+    margin-left: 0 !important;
+}
+
+.mjB {
+    margin-bottom: 30px;
+}
+
+.error {
+    color: #d11534;
+}

@@ -2,20 +2,28 @@
     margin-bottom: 60px;
 }
 
+.challenge-editorial-section {
+    margin-bottom: 60px;
+}
+
 .code-editor-section {
     position: relative;
     display: block;
 }
 
 .code-editor-wrapper {
-    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.2);
     padding: 25px;
     background-color: rgb(255, 255, 255);
     margin-bottom: 10px;
 }
 
 .challenge-problem-wrapper {
-    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.2);
+    color: rgb(77, 77, 77);
+    background-color: rgb(255, 255, 255);
+    padding: 25px;
+}
+
+.challenge-editorial-wrapper {
     color: rgb(77, 77, 77);
     background-color: rgb(255, 255, 255);
     padding: 25px;

@@ -1,5 +1,5 @@
 import './App.scss';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
 import Chapters from './components/Chapters/ChaptersContainer';
@@ -11,9 +11,7 @@ import { RootState } from './store/store';
 
 function App() {
   const course = useSelector((state: RootState) => state.chapters.course);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let { path, url } = useRouteMatch();
-
+  
   return (
     <div className="app">
       <Navbar />

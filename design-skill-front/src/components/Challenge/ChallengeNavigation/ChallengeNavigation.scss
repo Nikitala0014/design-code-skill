@@ -1,0 +1,19 @@
+.tab-item {
+    position: relative;
+    padding: 15px 30px;
+    font-size: 16px;
+    outline-width: 0;
+    border: 0;
+}
+
+.selected {
+    background-color: #fff;
+}
+
+.tab-item-color {
+    color: #738f93;
+}
+.ui-icon-label {
+    display: inline-block;
+    vertical-align: middle;
+}

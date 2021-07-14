@@ -13,7 +13,7 @@ async () => {
 )
 
 const initialState = {
-    role: 'User',
+    role: 'Root',
     loading: 'Loading',
     user: {
         name: 'Nikita',
