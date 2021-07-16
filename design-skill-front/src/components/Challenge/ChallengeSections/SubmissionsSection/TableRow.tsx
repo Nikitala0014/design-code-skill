@@ -1,6 +1,6 @@
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
-export const TableRow = ({status, score, time, codeId}) => {
+export const TableRow = ({status, score, time, submitedCodeId}) => {
     const { url } = useRouteMatch();
     
     return (
@@ -22,7 +22,7 @@ export const TableRow = ({status, score, time, codeId}) => {
                 </div>
                 <div className="table-row-column ellipsis view-results">
                     <div className="ellipsis submission-result">
-                        <NavLink to={`${url}/code/${codeId}`} className="text-link">
+                        <NavLink to={`${url}/code/${submitedCodeId}`} className="text-link">
                             View Result
                         </NavLink>
                     </div>

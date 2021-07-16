@@ -4,7 +4,24 @@ import './SubmissionDetails.scss';
 import Editor from '../../../../Editor/Editor'
 import { ChallengeCompiler } from '../../../ChallengeCompiler/ChallengeCompiler';
 
-export const SubmissionDetails = ({time, score, status, submitedCode}) => {
+export interface ISubmissionData {
+    status: string;
+    input: number[];
+    userOutput: string;
+    expectedOutput: string;
+}
+
+interface ISubmissionDetails {
+    time: string;
+    score: string;
+    status: string;
+    submitedCode: string;
+    submissionData: ISubmissionData[];
+}
+
+export const SubmissionDetails = ({
+    time, score, status, submitedCode, submissionData
+}: ISubmissionDetails) => {
     return (
         <section className="submission-details mjb">
             <div className="submission-details-wrapper challenge-bsw">
@@ -31,13 +48,7 @@ export const SubmissionDetails = ({time, score, status, submitedCode}) => {
                     </div>
                 </div>
             </div>
-            <ChallengeCompiler
-                cases={{
-                    case_0: {status: 'error', input: [4, 1, 2, 3], userOutput: '5', expectedOutput: '3'},
-                    case_1: {status: 'accepted', input: [24, 2, 89, 3, 5], userOutput: '34', expectedOutput: '45'},
-                    case_2: {status: 'accepted', input: [7, 9, 1, 0, 3], userOutput: '12', expectedOutput: '7'}
-                }}
-            />
+            <ChallengeCompiler {...submissionData}/>
         </section>
     )
 }

@@ -1,3 +1,5 @@
+import { IChallenge } from '../../interfaces/challenge.interface';
+
 export const childrenEditorial = `
 <ol>
     <li>
@@ -99,7 +101,7 @@ function main() {
 }
 `
 
-export const challenges = [
+export const challenges: IChallenge[] = [
     {
         _id: '1',
         title: 'Minimum Swaps 2',
@@ -114,6 +116,68 @@ export const challenges = [
         content: {
             contentProblem: childrenProblem,
             contentCode: code,
+            contentSubmissions: [
+                {
+                    status: 'error', 
+                    score: 0.0, 
+                    time: "9 days ago", 
+                    submitedCodeId: "102345",
+                    details: [{
+                        time: '9 days ago',
+                        score: '0.0',
+                        status: 'error',
+                        submitedCodeId: "102345",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'error', 
+                                input: [4, 1, 2, 3], 
+                                userOutput: '5', 
+                                expectedOutput: '3'},
+                            {
+                                status: 'accepted', 
+                                input: [24, 2, 89, 3, 5], 
+                                userOutput: '34', 
+                                expectedOutput: '45'},
+                            {
+                                status: 'accepted', 
+                                input: [7, 9, 1, 0, 3], 
+                                userOutput: '12', 
+                                expectedOutput: '7'}
+                        ]
+                    }],
+                },    
+                {   
+                    status: 'accepted', 
+                    score: 20.0, 
+                    time: "one year ago", 
+                    submitedCodeId: "734970",
+                    details: [{
+                        time: 'one year ago',
+                        score: '20.0',
+                        status: 'accepted',
+                        submitedCodeId: "734970",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'accepted', 
+                                input: [12, 4, 2, 3, 8, 9, 2, 8], 
+                                userOutput: '8', 
+                                expectedOutput: '8'},
+                            {
+                                status: 'accepted', 
+                                input: [24, 2, 89, 3, 5, 8, 2, 3, 1], 
+                                userOutput: '12', 
+                                expectedOutput: '12'},
+                            {
+                                status: 'accepted', 
+                                input: [7, 9, 1, 0, 3, 5, 6, 1], 
+                                userOutput: '3', 
+                                expectedOutput: '3'}
+                        ]
+                    }],
+                },
+            ]
         }
     },
     {
@@ -127,6 +191,72 @@ export const challenges = [
             successRatio: '92.91%',
         },
         preview: 'Return the minimum number of swaps to sort the given array.',
+        content: {
+            contentProblem: childrenProblem,
+            contentCode: code,
+            contentSubmissions: [
+                {
+                    status: 'accepted', 
+                    score: 10.0, 
+                    time: "1 day ago", 
+                    submitedCodeId: "79389793",
+                    details: [{
+                        time: '1 day ago',
+                        score: '10.0',
+                        status: 'accepted',
+                        submitedCodeId: "79389793",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'accepted', 
+                                input: [4, 1, 2, 3, 3, 5, 23, 21, 1], 
+                                userOutput: '6', 
+                                expectedOutput: '6'},
+                            {
+                                status: 'accepted', 
+                                input: [24, 2, 89, 3, 5, 2, 45, 123], 
+                                userOutput: '33', 
+                                expectedOutput: '33'},
+                            {
+                                status: 'accepted', 
+                                input: [73, 19, 51, 0, 3, 1, 5, 7], 
+                                userOutput: '7', 
+                                expectedOutput: '7'}
+                        ]
+                    }],
+                },    
+                {   
+                    status: 'accepted', 
+                    score: 25.0, 
+                    time: "1 month ago", 
+                    submitedCodeId: "397398230",
+                    details: [{
+                        time: '1 month ago',
+                        score: '25.0',
+                        status: 'accepted',
+                        submitedCodeId: "397398230",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'accepted', 
+                                input: [1, 4, 6, 2, 7], 
+                                userOutput: '1', 
+                                expectedOutput: '1'},
+                            {
+                                status: 'accepted', 
+                                input: [1, 9, 7, 8, 5, 6, 4, 2, 3], 
+                                userOutput: '78', 
+                                expectedOutput: '78'},
+                            {
+                                status: 'accepted', 
+                                input: [12, 345, 567, 753], 
+                                userOutput: '145', 
+                                expectedOutput: '145'}
+                        ]
+                    }],
+                },
+            ]
+        }
     },
     {
         _id: '3',
@@ -139,6 +269,72 @@ export const challenges = [
             successRatio: '56.81%',
         },
         preview: 'Return the minimum number of swaps to sort the given array.',
+        content: {
+            contentProblem: childrenProblem,
+            contentCode: code,
+            contentSubmissions: [
+                {
+                    status: 'error', 
+                    score: 0.0, 
+                    time: "2 days ago", 
+                    submitedCodeId: "329042919",
+                    details: [{
+                        time: '2 days ago',
+                        score: '0.0',
+                        status: 'error',
+                        submitedCodeId: "329042919",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'error', 
+                                input: [4, 1, 2, 3, 332, 3, 2, 6, 5], 
+                                userOutput: '23', 
+                                expectedOutput: '2'},
+                            {
+                                status: 'error', 
+                                input: [2, 32, 49, 36, 51, 32, 21], 
+                                userOutput: '7', 
+                                expectedOutput: '23'},
+                            {
+                                status: 'error', 
+                                input: [72, 912, 21, 10, 34], 
+                                userOutput: '34', 
+                                expectedOutput: '33'}
+                        ]
+                    }],
+                },    
+                {   
+                    status: 'error', 
+                    score: 5.0, 
+                    time: "23 days ago", 
+                    submitedCodeId: "021984090712",
+                    details: [{
+                        time: '23 days ago',
+                        score: '5.0',
+                        status: 'error',
+                        submitedCodeId: "021984090712",
+                        submitedCode: code,
+                        submissionData: [
+                            {
+                                status: 'accepted', 
+                                input: [1, 42, 24, 35, 68, 4, 1, 6, 7], 
+                                userOutput: '13', 
+                                expectedOutput: '17'},
+                            {
+                                status: 'accepted', 
+                                input: [22, 21, 49, 23, 55, 38, 72, 9, 6], 
+                                userOutput: '9', 
+                                expectedOutput: '9'},
+                            {
+                                status: 'error', 
+                                input: [732, 49, 12, 30, 33, 54, 63, 11], 
+                                userOutput: '89', 
+                                expectedOutput: '89'}
+                        ]
+                    }],
+                },
+            ]
+        },
     },
     {
         _id: 'newChallenge',
@@ -151,5 +347,13 @@ export const challenges = [
             successRatio: '56.81%',
         },
         preview: 'Enter here short preview for this challenge',
+        content: {
+            contentProblem: childrenProblem,
+            contentCode: code,
+            contentSubmissions: [
+                {status: 'error', score: 0.0, time: "9 days ago", submitedCodeId: "102345"},
+                {status: 'accepted', score: 20.0, time: "one year ago", submitedCodeId: "734970"}
+            ]
+        }
     },
 ];

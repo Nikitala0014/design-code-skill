@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './ChallengeCompiler.scss';
 
+import { ISubmissionData } from '../ChallengeSections/SubmissionsSection/SubmissionDetails/SubmissionDetails'
 import { TestCasesList } from './TestCasesList';
 import { TestCasesContent } from './TestCasesContent';
 
 // {status, input, expectedOutput}
-export const ChallengeCompiler = ({cases}) => {
-    const {case_0, case_1, case_2} = cases;
+export const ChallengeCompiler = (cases: ISubmissionData[]) => {
+    const [case_0, case_1, case_2] = [cases[0], cases[1], cases[2]] 
     const [selectedCase, setSelectedCase] = useState('0')
     const caseToView = selectedCase === '0' ? case_0 : selectedCase === '1' ? case_1 : case_2;
     const { status, input, userOutput, expectedOutput } = caseToView;
