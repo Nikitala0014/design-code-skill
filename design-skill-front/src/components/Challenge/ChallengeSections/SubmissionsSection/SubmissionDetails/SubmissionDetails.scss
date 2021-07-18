@@ -1,6 +1,7 @@
+@import '../../../../../scss/variables';
+
 .submission-details-wrapper {
     background-color: white;
-    padding: 30px;
     font-size: 18px;
 }
 
@@ -8,13 +9,9 @@
     font-size: 14px;
 }
 
-.sibmitted-at {
-    margin-bottom: 10px;
-}
 
 .submission-score, .status-wrap {
     display: inline-block;
-    margin-right: 20px;
     font-size: 14px;
 }
 
@@ -22,12 +19,8 @@
     font-weight: 500;
 }
 
-.code-block {
-    margin-top: 30px;
-}
-
 .section-title {
-    font-weight: 700;
+    font-weight: $fwLarge;
     font-size: 18px;
 }
 
@@ -48,10 +41,6 @@
     margin-left: 0 !important;
 }
 
-.mjB {
-    margin-bottom: 30px;
-}
-
 .error {
-    color: #d11534;
+    color: $colorError;
 }

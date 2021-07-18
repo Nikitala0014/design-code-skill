@@ -1,7 +1,7 @@
 export const EditorSection = ({code, Editor}) => {
     return (
         <section className="code-editor-section">
-            <div className="code-editor-wrapper challenge-bsw">
+            <div className="code-editor-wrapper mBS challenge-bsw">
                 <Editor code={code} lang="javascript" />
             </div>
             <div className="plT pmL pmR pmB run-code-wrapper">

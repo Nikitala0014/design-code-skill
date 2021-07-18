@@ -1,0 +1,150 @@
+@import "./scss/variables";
+
+.flex {
+    display: flex;
+}
+.flex-display {
+    margin: 15px 0;
+    width: 100%;
+}
+.flex-row {
+    flex-direction: row !important;
+}
+.flex-column {
+    flex-direction: column !important;
+}
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+.flex-nowrap {
+    flex-wrap: nowrap !important;
+}
+.flex-between {
+    justify-content: space-between;
+}
+.flex-end {
+    align-items: flex-end;
+}
+.flex-start {
+    align-items: flex-start;
+}
+.flex-justify-start
+
+.mBS {
+    margin-bottom: $mS;
+}
+.mBM {
+    margin-bottom: $mM;
+}
+.mBL {
+    margin-bottom: $mL;
+}
+.mTS {
+    margin-top: $mS;
+}
+.mTL {
+    margin-top: $mL;
+}
+.mRS {
+    margin-right: $mS;
+}
+.mRM {
+    margin-right: $mM;
+}
+.mLS {
+    margin-left: $mS;
+}
+.mLM {
+    margin-left: $mM;
+}
+.mLL {
+    margin-left: $mL;
+}
+.mRN {
+    margin-right: 0;
+}
+.pS {
+    padding: $pS;
+}
+.pL {
+    padding: $pL;
+}
+.pTS {
+    padding-top: $pS;
+}
+.pTM {
+    padding-top: $pM;
+}
+.pBM {
+    padding-bottom: $pM;
+}
+.pTL {
+    padding-top: $pL;
+}
+.pB {
+    padding: $pL;
+}
+.pM {
+    padding: $pM;
+}
+.pS {
+    padding: $pS;
+}
+.mM {
+    margin: $mM;
+}
+.mS {
+    margin: $mS;
+}
+.mLN {
+    margin-left: 0;
+}
+.mTN {
+    margin-top: 0;
+}
+.mBN {
+    margin-bottom: 0;
+}
+
+.pLL {
+    padding-left: $pL;
+}
+.pRL {
+    padding-right: $pL;
+}
+
+.mMHR {
+    margin-right: $mMHalf;
+}
+.mMHL {
+    margin-left: $mMHalf;
+}
+
+.pMHR {
+    padding-right: $pMHalf;
+}
+.pMHL {
+    padding-left: $pMHalf;
+}
+.pMHB {
+    padding-bottom: $pMHalf;
+}
+.pMHT {
+    padding-top: $pMHalf;
+}
+
+.plT {
+    padding-top: 20px;
+}
+.pmL {
+    padding-left: 5px;
+}
+.pmR {
+    padding-right: 5px;
+}
+.pmB {
+    padding-bottom: 5px;
+}
+.pmT {
+    padding-bottom: 5px;
+}

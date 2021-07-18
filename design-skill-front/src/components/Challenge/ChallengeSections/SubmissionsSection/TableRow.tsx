@@ -4,7 +4,7 @@ export const TableRow = ({status, score, time, submitedCodeId}) => {
     const { url } = useRouteMatch();
     
     return (
-        <div className="table-row-wrapper">
+        <div className="table-row-wrapper pLL pRL">
             <div className="table-row flex">
                 <div className="table-row-column ellipsis result">
                     <div className={`ellipsisi ${status === 'error' 

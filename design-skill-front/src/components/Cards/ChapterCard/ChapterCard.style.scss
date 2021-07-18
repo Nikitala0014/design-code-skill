@@ -1,44 +1,57 @@
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
+
 .chapter-card {
     position: relative;
-    box-shadow: 0px 0px 10px 5px rgba(0, 182, 0, 0.158);
-    width: calc(33.33333% - 3.5rem);
+    box-shadow: $bsw;
+    width: $wChCard;
     height: 100%;
-    margin: 1rem;
-    padding: 0.625rem;
 
     &:hover {
-        box-shadow: 0px 0px 10px 5px rgba(0, 182, 0, 0.4);
+        box-shadow: $bswH;
         cursor: pointer;
+    }
+
+    .link {
+        min-width: 180px;
+        align-items: center
     }
 }
 
 .new-chapter-card {
+    @include newCard();
     position: relative;
-    box-shadow: 0px 0px 10px 5px rgba(0, 27, 182, 0.158);
-    width: calc(33.33333% - 3.5rem);
+    width: $wChCard;
     height: 100%;
-    margin: 1rem;
-    padding: 0.625rem;
 
     &:hover {
-        box-shadow: 0px 0px 10px 5px rgba(0, 27, 182, 0.4);
-        cursor: pointer;
+        box-shadow: $bsWNewCardH;
     }
 
     button {
-        border: 1px solid rgb(14, 10, 250);
-        color: rgb(65, 3, 236);
+        border: 1px solid $borderBtnAddCol;
+        color: $textColAddBtn;
 
         &:hover {
-            background-color: rgba(10, 14, 250, 0.151);
-            cursor: pointer;
+            background-color: $backBtnAddColH;
+        }
+    }
+
+    input {
+        border: 1px solid transparent;
+        outline: none;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+            border-color: $inputBorderColor;
         }
     }
 }
 
 .chapter-card-title {
-    font-size: 2em;
-    margin: 0.67em 0;
+    font-size: $fzTitle;
+    color: $titleCardColor;
 
     input {
         border: 1px solid transparent;
@@ -48,13 +61,12 @@
         font-weight: 500;
 
         &:hover {
-            border-color: rgba(47, 113, 255, 0.26);
+            border-color: $inputBorderColor
         }
     }
 }
 
 .chapter-card-detail {
-    margin-bottom: 0.625rem;
     width: 100%;
 
     input {
@@ -64,29 +76,29 @@
         height: 100%;
 
         &:hover {
-            border-color: rgba(47, 113, 255, 0.26);
+            border-color: $inputBorderColor;
         }
     }
 }
 
 .btn {
-    border: 1px solid rgb(10, 250, 170);
-    border-radius: 0.1rem;
-    padding: 0.625rem;
-    margin-top: 0.625rem;
-    margin-bottom: 0.625rem;
-    background-color: white;
-    color: rgb(3, 236, 159);
-    font-weight: 700;
+    @include MBtnCard(#fff, $fwLarge, $textColBtn, $borderBtnCol);
+    padding-right: $pM;
+    padding-left: $pM;
+    padding-top: $pS;
+    padding-bottom: $pS;
+    width: $btnCardW;
 
     &:hover {
-        background-color: rgba(10, 250, 170, 0.151);
-        cursor: pointer;
+        background-color: $backBtnColH;
     }
-}
 
-.btn-delete {
-    border: 1px solid rgb(221, 70, 0)!important;
-    color: orangered!important;
-    margin-left: 1rem;
+    &.btn-delete {
+        border: 1px solid $borderBtnDelCol;
+        color: $btnDeleteColor;
+
+        &:hover {
+            background-color: $backBtnDelColH;
+        }
+    }
 }

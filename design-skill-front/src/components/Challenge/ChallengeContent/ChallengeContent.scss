@@ -1,3 +1,5 @@
+@import '../../../scss/variables';
+
 .challenge-problem-section {
     margin-bottom: 60px;
 }
@@ -14,19 +16,16 @@
 .code-editor-wrapper {
     padding: 25px;
     background-color: rgb(255, 255, 255);
-    margin-bottom: 10px;
 }
 
 .challenge-problem-wrapper {
-    color: rgb(77, 77, 77);
+    color: $mainTextColor;
     background-color: rgb(255, 255, 255);
-    padding: 25px;
 }
 
 .challenge-editorial-wrapper {
-    color: rgb(77, 77, 77);
+    color: $mainTextColor;
     background-color: rgb(255, 255, 255);
-    padding: 25px;
 }
 
 .run-code-wrapper {
@@ -36,13 +35,12 @@
 }
 
 .btn-primary {
-    background-color: #1ba94c;
-    border-color: #1ba94c;
-    box-shadow: 0 4px 12px 0 rgba(27, 169, 76, .5);
+    background-color: $backBtnColPr;
+    box-shadow: $bswBtnPrimary;
     color: white;
 
     &:hover {
-        background-color: #08993b;
+        background-color: $backBtnColPrH;
     }
 }
 .btn-normal {
@@ -61,17 +59,4 @@
 }
 .ui-text {
     order: 1;
-}
-
-.plT {
-    padding-top: 20px;
-}
-.pmL {
-    padding-left: 5px;
-}
-.pmR {
-    padding-right: 5px;
-}
-.pmB {
-    padding-bottom: 5px;
 }

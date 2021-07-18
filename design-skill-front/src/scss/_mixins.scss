@@ -1,0 +1,42 @@
+@import './variables';
+
+@mixin MBtnCard ($backColor, $fontW, $btnColor, $brBtnC) {
+    border: 1px solid $brBtnC;
+    border-radius: 0.1rem;
+    background-color: $backColor;
+    color: $btnColor;
+    font-weight: $fontW;
+    cursor: pointer;
+}
+
+@mixin headerBtn ($borderColor, $backColor, $color, $width, $backHover) {
+    border: 1px solid $borderColor;
+    background: $backColor;
+    color: $color;
+    width: $width !important;
+
+    &:hover {
+        background: $backHover !important;
+    }
+}
+
+@mixin newCard () {
+    box-shadow: $bswNewCard;
+    background-color: white;
+    cursor: pointer;
+
+    input {
+        border: 1px solid transparent;
+        outline: none;
+        width: 100%;
+        height: 100%;
+        visibility: visible;
+    }
+}
+
+@mixin challengeDiff ($colorDiff) {
+    color: $colorDiff;
+    input {
+        color: $colorDiff;
+    }
+}

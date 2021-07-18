@@ -7,7 +7,7 @@ export const EditorialSection = ({isEdit, children, content, Editor}) => {
                 ?   <Editor code={children} lang="html" />
                 :   <div 
                         ref={ref => ref?.appendChild(content)}
-                        className="challenge-editorial-wrapper">
+                        className="challenge-editorial-wrapper pB">
                     </div>
                 }
             </section>

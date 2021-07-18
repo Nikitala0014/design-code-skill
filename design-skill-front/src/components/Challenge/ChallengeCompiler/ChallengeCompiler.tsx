@@ -17,7 +17,7 @@ export const ChallengeCompiler = (cases: ISubmissionData[]) => {
 
     return (
         <div className="tc-container">
-            <div className="test-cases-result-wrapper">
+            <div className="test-cases-result-wrapper flex flex-row">
                 <TestCasesList 
                     selectedCase={selectedCase} 
                     setSelectedCase={setSelectedCase}

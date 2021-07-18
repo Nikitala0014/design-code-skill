@@ -1,49 +1,19 @@
-.chapters-header {
-    margin: 0.625rem;
-}
-
-.chapters-content-playlist {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
+@import '../../scss/variables';
 
 .chapters-content-playlist__addition {
-    width: calc(33.33333% - 3.5rem);
+    width: $wChCard;
     height: 100%;
     border: 1px solid greenyellow;
 }
 
 .chapters-info-banner__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: rgb(22, 22, 170);
+    background-color: $mainBackInfoBanner;
     color: white;
 }
 
 .banner-block {
-    width: calc(33.33333% - 3.5rem);
+    width: $wChCard;
     margin: 1rem;
     padding: 0.625rem;
     height: 100%;
-}
-
-.chapters-settings {
-    padding: 0.625rem;
-    background-color: whitesmoke;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-
-.btn-settings {
-    margin-left: 0.625rem;
-    margin-right: 0.625rem;
-}
-
-.addChapter {
-    border: 1px solid rgba(0, 0, 255, 0.685)!important;
-    color: rgb(22, 119, 230)!important;
 }

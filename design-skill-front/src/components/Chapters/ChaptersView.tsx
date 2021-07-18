@@ -1,13 +1,13 @@
 export const ChaptersView = ({renderedListChapterCard}) => {
     return (
         <>
-            <header className="chapters-header">
+            <header className="chapters-header mS">
                 <h1>
                     The Interview Preparation Kit
                 </h1>
             </header>
             <section className="chapters-info-banner">
-                <div className="chapters-info-banner__container">
+                <div className="chapters-info-banner__container flex flex-row flex-between">
                     <div className="banner-block">
                         <h2>Learnings from 1000+ Companies</h2>
                         <p>
@@ -33,7 +33,7 @@ export const ChaptersView = ({renderedListChapterCard}) => {
             </section>
             <main className="chapters-content">
                 <div className="container">
-                    <div className="chapters-content-playlist">
+                    <div className="chapters-content-playlist flex flex-row flex-justify-start flex-wrap">
                         {renderedListChapterCard}
                     </div>
                 </div>

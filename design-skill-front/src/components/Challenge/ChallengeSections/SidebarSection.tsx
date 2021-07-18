@@ -1,4 +1,4 @@
-export const SidebarProblem = ({username, diff, score}) => {
+export const SidebarSection = ({username, diff, score}) => {
     const diffClass = diff === 'medium' ? 'difficulty-medium' 
     : diff === 'hard' ? 'difficulty-hard' : 'difficulty-easy';
     return (

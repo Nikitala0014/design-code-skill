@@ -1,52 +1,49 @@
-.challenge-bsw {
-    box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.2);
+@import '../../scss/variables';
+
+.theme-grey {
+    background: $mainBackground
 }
 
-.challenge-view {
-    background: #f3f7f7;
+.challenge-bsw {
+    box-shadow: $bswChSection;
 }
 
 .challenge-view-header {
-    box-shadow: 0.1px 1px 4px 0 #e7eeef;
+    display: block;
+    box-shadow: $bswHeaderCh;
     padding: 1rem;
-    color: rgb(17, 17, 94);
+    color: $mainHeaderColor;
     background-color: white;
 }
 
 .container {
     margin: 0 auto;
-    padding-right: 20px;
-    padding-left: 20px;
 }
 
 .panes-container {
-    display: flex;
-    flex-direction: row;
     margin: 0 auto;
-    padding-right: 20px;
-    padding-left: 20px;
 }
 
 .challenge-sidebar {
-    font-size: 14px;
+    font-size: $fzD;
 }
 .difficulty-label {
     display: inline;
-    margin-right: 5px;
-    color: #738f93;
+    margin-right: $mMin;
+    color: $mainTextColor;
 }
 .difficulty-medium {
     color: brown;
 }
 .difficulty-score {
-    color: #39424e;
+    color: $additionColor;
 }
 .difficulty-block {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: $mS;
 }
 
 .ui-tooltip-wrapper {
@@ -54,14 +51,13 @@
 }
 
 .text-link {
-    color: #097bbf;
+    color: $mainLinkColor;
     cursor: pointer;
 }
 
 
 .right-pane-challenge {
     width: 280px;
-    margin: 0 0 30px 30px;
 }
 .left-pane-challenge {
     flex: 1;

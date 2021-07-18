@@ -7,7 +7,7 @@ return (
             ?   <Editor code={children} lang="html" />
             :   <div 
                     ref={ref => ref?.appendChild(content)}
-                    className="challenge-problem-wrapper">
+                    className="challenge-problem-wrapper pB">
                 </div>
             }
         </section>

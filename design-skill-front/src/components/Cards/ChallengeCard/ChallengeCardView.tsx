@@ -13,8 +13,8 @@ export const ChallengeCardView = ({challenge, role, callbacks, style, chapter, c
     } = callbacks;
     return (
         <>
-            <div id={_id} className={style}>
-                <header className="challenge-card-header">
+            <div id={_id} className={`${style} pB mBL mLL`}>
+                <header className="challenge-card-header flex flex-column flex-wrap flex-between">
                     <h4 className="challenge-card-title">
                         {role === 'Root'
                         ? <input 
@@ -27,7 +27,7 @@ export const ChallengeCardView = ({challenge, role, callbacks, style, chapter, c
                           />
                         : title}
                     </h4>
-                    <span className="challenge-card-details">
+                    <span className="challenge-card-details pTS">
                         <span className={`
                         ${difficulty === 'Medium' ? 'difficulty-medium' 
                         : difficulty === 'Easy' ? 'difficulty-easy' : 'difficulty-hard' }
@@ -82,7 +82,7 @@ export const ChallengeCardView = ({challenge, role, callbacks, style, chapter, c
                         },</span>
                     </span>
                 </header>
-                <div className="preview-box">
+                <div className="preview-box mTS flex flex-row flex-wrap flex-between flex-end">
                     <div className="challenge-card-preview">{
                         role === 'Root'
                         ? <input 
@@ -99,17 +99,17 @@ export const ChallengeCardView = ({challenge, role, callbacks, style, chapter, c
                     <div className="btn-container">
                         {style === 'challenge-card' &&
                             <Link to={`/${course}/arrays/challenges/${title}/problem`}>
-                                <button className="btn-challenge">Solve Challenge</button>
+                                <button className="btn-challenge pS mTS mBS mRS">Solve Challenge</button>
                             </Link>
                         }
                         {style === 'new-challenge-card' &&
-                            <button className="btn-challenge" onClick={handleAddChallenge}>
+                            <button className="btn-challenge pS mTS mBS mRS" onClick={handleAddChallenge}>
                                 Add Challenge
                             </button>
                         }
                         {role === 'Root' && style === 'challenge-card' &&
                             <button 
-                                className="btn-challenge btn-delete-challenge" 
+                                className="btn-challenge btn-delete-challenge pS mTS mBS mRS" 
                                 onClick={handleDeleteChallenge}>
                                 Delete Challenge
                             </button>

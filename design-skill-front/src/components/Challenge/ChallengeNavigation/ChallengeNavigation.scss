@@ -1,6 +1,7 @@
+@import '../../../scss/variables';
+
 .tab-item {
     position: relative;
-    padding: 15px 30px;
     font-size: 16px;
     outline-width: 0;
     border: 0;
@@ -11,7 +12,7 @@
 }
 
 .tab-item-color {
-    color: #738f93;
+    color: $mainTextColor;
 }
 .ui-icon-label {
     display: inline-block;

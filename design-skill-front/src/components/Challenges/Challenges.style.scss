@@ -1,43 +1,32 @@
+@import '../../scss/variables';
+
 .challenges-content {
-    background-color: #f3f7f7;
-    padding-top: 30px;
-    color: #39424e;
+    background-color: $mainBackground;
+    color: $additionColor;
     font-size: 14px;
 }
 
 .challenges-title {
-    font-weight: 700;
+    font-weight: $fwLarge;
     font-size: 26px;
-    margin-left: 20px;
 }
 
 .right-pane-challenges {
-    margin: 0 0 30px 30px;
     width: 280px;
 }
 
 .left-pane-challenges {
     flex: 1;
-    margin-bottom: 30px;
 }
 
 .content-container {
     position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
 }
 
 .group-label {
     margin-bottom: 10px;
-    color: #979faf;
+    color: $mainTextColor;
     text-transform: uppercase;
-}
-
-.ui-checklist-item {
-    display: flex;
-    margin-right: 15px;
-    margin-bottom: 10px;
 }
 
 .checkbox-input {

@@ -1,3 +1,5 @@
+@import '../../scss/variables';
+
 .profile-container {
     max-width: 1120px;
     margin: 20px auto;
@@ -6,22 +8,20 @@
 .profile-header {
     max-width: 840px;
     margin: 0 auto;
-    display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
 .profile-image {
     border-radius: 50%;
-    background-color: aquamarine;
+    background-color: $mainProfileImgDef;
     width: 100px;
     height: 100px;
 }
 
 .profile-header h1 {
     font-size: 1.75rem;
-    font-weight: 400;
+    font-weight: $fwSmall;
     line-height: 2.25rem;
     text-align: center;
 }
@@ -34,17 +34,12 @@
 }
 
 .profile-challenges {
-    display: flex;
-    flex-wrap: wrap;
     align-items: stretch;
     width: calc(100% + 24px);
-    justify-content: space-between;
 }
 
 .profile-challenges-item {
     width: 40%;
-    display: flex;
-    flex-direction: column;
     margin-left: 12px;
     margin-right: 12px;
     margin-top: 24px;
@@ -56,7 +51,7 @@
 
     h1 {
         font-size: 1.75rem;
-        font-weight: 400;
+        font-weight: $fwSmall;
         line-height: 2.25rem;
     }
 }

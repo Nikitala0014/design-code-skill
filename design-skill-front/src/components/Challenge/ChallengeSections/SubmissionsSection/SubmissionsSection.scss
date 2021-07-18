@@ -1,3 +1,5 @@
+@import '../../../../scss/variables';
+
 .challenge-submissions-section {
     margin-bottom: 60px;
 }
@@ -7,14 +9,6 @@
     background-color: white;
 }
 
-.table-header {
-    padding: 0 30px;
-}
-
-.flex {
-    display: flex;
-}
-
 .table-header-column {
     padding: 20px 0;
     flex: 1 1 20%;
@@ -22,8 +16,8 @@
     min-width: 0;
     letter-spacing: 2px;
     line-height: 1.4;
-    font-weight: 400;
-    color: #738f93;
+    font-weight: $fwSmall;
+    color: $mainTextColor;
     text-transform: uppercase;
     font-size: 14px;
 }
@@ -37,7 +31,7 @@
 .score {
     text-align: right;
     padding-right: 60px !important;
-    font-weight: 400;
+    font-weight: $fwSmall;
 }
 
 .view-results {
@@ -55,28 +49,24 @@
     align-items: center;
 }
 
-.table-row-wrapper {
-    padding: 0 30px;
-}
-
 .table-row-column {
     flex: 1 1 20%;
     padding: 14px 0;
     float: left;
     min-width: 0;
-    color: #39424e;
+    color: $additionColor;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: $fwSmall;
 }
 
 .status-error {
-    color: #d11534;
+    color: $colorError;
 }
 .status-accepted {
-    color: #1ba94c;
+    color: $colorSuccess;
 }
 
 .text-link {
-    color: #097bbf;
+    color: $mainLinkColor;
     cursor: pointer;
 }

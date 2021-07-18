@@ -2,18 +2,18 @@ export const ChallengesView = ({renderedChallengeCards, title, callbacks}) => {
     const { handleChangeStatus, handleChangeDifficulty } = callbacks;
     return (
         <>
-            <h1 className="challenges-title">Hello From Challenges of {title}</h1>
+            <h1 className="challenges-title mLL">Hello From Challenges of {title}</h1>
             <header className="challenges-header"></header>
-            <main className="challenges-content">
-                <div className="content-container">
-                    <div className="challenges-list left-pane-challenges">
+            <main className="challenges-content pTL">
+                <div className="content-container flex flex-row flex-nowrap">
+                    <div className="challenges-list left-pane-challenges mBL">
                         {renderedChallengeCards}
                     </div>
-                    <div className="challenges-filter-section right-pane-challenges">
+                    <div className="challenges-filter-section right-pane-challenges mBL mLL">
                         <div className="filter-group">
-                            <div className="group-label">STATUS</div>
+                            <div className="group-label mBS">STATUS</div>
                             <div className="ui-checklist-list">
-                                <div className="ui-checklist-item">
+                                <div className="ui-checklist-item flex mRM mBS">
                                     <label className="label-wrap">
                                         <div className="checkbox-wrap">
                                             <input 
@@ -48,7 +48,7 @@ export const ChallengesView = ({renderedChallengeCards, title, callbacks}) => {
                             </div>
                         </div>
                         <div className="filter-group">
-                            <div className="group-label">DIFFICULTY</div>
+                            <div className="group-label mBS">DIFFICULTY</div>
                             <div className="ui-checklist-list">
                                 <div className="ui-checklist-item">
                                     <label className="label-wrap">

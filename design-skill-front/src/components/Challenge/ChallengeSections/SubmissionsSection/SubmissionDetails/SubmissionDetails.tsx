@@ -23,22 +23,22 @@ export const SubmissionDetails = ({
     time, score, status, submitedCode, submissionData
 }: ISubmissionDetails) => {
     return (
-        <section className="submission-details mjb">
-            <div className="submission-details-wrapper challenge-bsw">
+        <section className="submission-details mBL">
+            <div className="submission-details-wrapper challenge-bsw pL">
                 <div className="submission-header">
-                    <div className="submited-at">
+                    <div className="submited-at mBS">
                         Вы отправили это решение {time}
                     </div>
-                    <div className="submission-score">
+                    <div className="submission-score mMHR">
                         <label className="label">Оценка:</label>
                         <span className="value">{score}</span>
                     </div>
-                    <div className="status-wrap">
+                    <div className="status-wrap mMHR">
                         <label className="label">Статус:</label>
                         <span className="value error">{status}</span>
                     </div>
                 </div>
-                <div className="code-block">
+                <div className="code-block mTL">
                     <h3 className="section-title">Отправленный Код</h3>
                     <div className="code-wrap">
                         <Editor

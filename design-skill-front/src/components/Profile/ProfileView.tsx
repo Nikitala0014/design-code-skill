@@ -9,7 +9,7 @@ export const ProfileView = ({challenges}) => {
     const { bookmarked, solved, attempted } = challenges as ChallengesProfile;
     return (
         <div className="profile-container">
-            <header className="profile-header">
+            <header className="profile-header flex flex-column">
                 <div className="profile-image"></div>
                 <h1>Добро пожаловать, Nikita Lavrenov!</h1>
                 <div className="profile-description-abilities">
@@ -18,8 +18,8 @@ export const ProfileView = ({challenges}) => {
                     Одним словом - дерзайте.
                 </div>
             </header>
-            <section className="profile-challenges">
-                <div className="profile-challenges-item bookmarked">
+            <section className="profile-challenges flex flex-wrap flex-between">
+                <div className="profile-challenges-item bookmarked flex flex-column">
                     <h1>Bookmarked</h1>
                     {bookmarked}
                 </div>

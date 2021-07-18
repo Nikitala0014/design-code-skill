@@ -4,9 +4,9 @@ import './Navbar.scss';
 export default function Navbar() {
     return (
         <nav className="community-header">
-            <div className="nav-container">
+            <div className="nav-container flex flex-between">
                 <div className="header-nav-links">
-                    <ul className="nav-links">
+                    <ul className="nav-links flex">
                         <li className="nav-link-item logo-wrap">
                             <a href="/">
                                 <div className="logo-section">
@@ -26,7 +26,7 @@ export default function Navbar() {
                         </li>
                     </ul>
                 </div>
-                <div className="profile-menu">
+                <div className="profile-menu flex flex-row">
                     <a href="/">Nikita Lavrenov</a>
                 </div>
             </div>

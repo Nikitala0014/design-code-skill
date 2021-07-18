@@ -3,7 +3,7 @@ import React from 'react';
 export const SubmissionsHeader = () => {
     return (
         <div className="table-header-wrapper">
-            <header className="table-header flex">
+            <header className="table-header flex pLL pRL">
                 <div className="table-header-column result">
                     <div className="ellipsis">Результат</div>
                 </div>

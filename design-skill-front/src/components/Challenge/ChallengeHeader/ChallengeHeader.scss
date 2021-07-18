@@ -1,76 +1,59 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins';
+
 .challenge-page-header {
     padding-top: 25px;
 }
 
 .ui-tabs-wrap {
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
 }
 
 .render-list {
-    display: flex;
     width: 100%;
-    flex-wrap: wrap;
     align-self: stretch;
 }
 
 .tab-header {
     position: relative;
     z-index: 1;
-    display: flex;
     list-style: none;
-    flex-direction: row;
 }
 
 .btn-container-edit-challenge {
-    display: flex;
     width: 100%;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
 
-.edit-challenge-wrapper {
-    display: flex;
-    flex-direction: row;
-}
-
-.btn-container-edit-cancel {
-    margin-right: 20px;
-}
-
 .edit-challenge-button {
+    @include headerBtn(
+        $headerBtnEditBorder,
+        $headerBtnEditBack,
+        $headerBtnEditColor,
+        150px,
+        $headerBtnEditBackH,
+    );
     padding: 5px;
-    border: 1px solid rgb(46, 248, 123);
     border-radius: 5px;
-    background: rgb(227, 255, 240);
-    color: rgb(43, 226, 113);
-    width: 150px;
     cursor: pointer;
-
-    &:hover {
-        background: rgb(237, 252, 244);
-    }
 }
 .cancel {
-    border: 1px solid rgb(153, 51, 85);
-    background: rgb(255, 225, 225);
-    color: rgb(94, 23, 56);
-    width: 100px !important;
-
-    &:hover {
-        background: rgb(255, 238, 238) !important;
-    }
+    @include headerBtn(
+        $headerBtnCancelBorder,
+        $headerBtnCancelBack,
+        $headerBtnCancelColor,
+        100px,
+        $headerBtnCancelBackH,
+    );
 }
 
 .save {
-    border: 1px solid rgb(51, 70, 153);
-    background: rgb(225, 230, 255);
-    color: rgb(23, 48, 94);
-    width: 100px !important;
-
-    &:hover {
-        background: rgb(238, 243, 255) !important;
-    }
+    @include headerBtn(
+        $headerBtnSaveBorder, 
+        $headerBtnSaveBack, 
+        $headerBtnSaveColor,
+        100px,
+        $headerBtnSaveBackH,
+    );
 }

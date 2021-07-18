@@ -1,9 +1,9 @@
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
+
 .challenge-card {
-    padding: 30px;
-    box-shadow: 0 6px 16px 0 rgba(204, 197, 197, 0.2);
+    box-shadow: $bsw;
     background-color: white;
-    margin-bottom: 30px;
-    margin-left: 20px;
 
     input {
         border: 1px solid transparent;
@@ -16,20 +16,9 @@
 }
 
 .new-challenge-card {
-    padding: 30px;
-    box-shadow: 0 6px 16px 0 rgba(104, 113, 190, 0.2);
-    background-color: white;
+    @include newCard();
     margin-bottom: 30px;
     margin-left: 20px;
-
-    input {
-        border: 1px solid transparent;
-        outline: none;
-        width: 100%;
-        height: 100%;
-        width: auto;
-        visibility: visible;
-    }
 
     button {
         background-color:rgb(3, 182, 236) !important;
@@ -37,104 +26,64 @@
 }
 
 .challenge-card-header {
-    display: flex;
-    flex-direction: column;
     margin: 0;
-    flex-wrap: wrap;
-    justify-content: space-between;
     overflow: auto;
     flex: 1;
     margin-right: 60px;
     width: auto;
-    font-weight: 700;
-    color: #738f93;
+    font-weight: $fwLarge;
+    color: $mainTextColor;
 }
 
 .challenge-card-title {
-    color: black;
-    font-weight: 400 !important;
+    color: $titleCardColor;
+    font-weight: $fwSmall !important;
     line-height: 1.4;
-    font-size: 21px;
+    font-size: $fzSmallTitle;
 
     input {
-        font-weight: 400;
+        font-weight: $fwSmall;
     }
 }
 
 .challenge-card-details {
-    padding-top: 10px;
     font-size: 12px !important;
     line-height: 1.5;
     white-space: nowrap;
+    font-weight: $fwSmall;
 }
 .detail-item {
-    font-weight: 400;
-    color: #738f93;
     width: auto;
 }
 
 .preview-box {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-end;
     margin: -30px 0 0;
 }
 
 .challenge-card-preview {
     overflow: hidden;
     box-sizing: border-box;
-    margin-top: 10px;
     max-height: 100px;
     width: 60%;
-    color: #576871;
+    color: $mainTextColor;
     font-size: 13px;
 }
 
-.btn-container {
-    min-width: 180px !important;
-}
 .btn-challenge {
-    border: 1px solid rgba(10, 250, 170, 0);
-    background-color: rgb(0, 170, 77);
-    border-radius: 0.1rem;
-    width: 180px !important;
-    padding: 0.625rem;
-    margin-right: 0.625rem;
-    margin-top: 0.625rem;
-    margin-bottom: 0.625rem;
-    color: white !important;
-    color: rgb(3, 182, 236);
-    font-weight: 550;
+    @include MBtnCard($backChBtnColor, 550, white, $borderBtnChCol);
+    width: $btnCardW;
 
-    &:hover {
-        background-color: rgb(10, 250, 170);
-        cursor: pointer;
+    &.btn-delete-challenge {
+        background-color: $btnDeleteBackColor;
     }
-}
-.btn-delete-challenge {
-    color: orangered!important;
-    background-color: rgb(219, 157, 157);
-    width: 160px !important;
-
 }
 
 .difficulty-medium {
-    color: orange;
-    input {
-        color: orange;
-    }
+    @include challengeDiff(orange);
 }
 .difficulty-easy {
-    color: rgb(67, 211, 9);
-    input {
-        color: rgb(67, 211, 9);
-    }
+    @include challengeDiff(rgb(67, 211, 9));
 }
 .difficulty-hard {
-    color: red;
-    input {
-        color: red;
-    }
+    @include challengeDiff(red);
 }
