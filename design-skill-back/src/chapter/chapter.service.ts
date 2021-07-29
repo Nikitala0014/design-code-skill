@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UpdateChapterCardDto } from './dto/update-chapter-card.dto';
 
+import { UpdateChapterCardDto } from './dto/update-chapter-card.dto';
 import { IChapter } from './interfaces/chapter.interface';
 import { Chapter, ChapterDocument } from './schemas/chapter.schema';
 import { ChapterKeys } from './constants';
+import { CreateChapterDto } from './dto/create-chapter.dto';
 
 @Injectable()
 export class ChapterService {
@@ -15,10 +16,9 @@ export class ChapterService {
         return this.chapterModel.find().exec();
     }
 
-    async addChapter(chapter: IChapter): Promise<IChapter> {
-        const { title, detail } = chapter;
-        const createdChapter = new this.chapterModel({title, detail});
-        return createdChapter.save();
+    async addChapter(chapter: CreateChapterDto): Promise<IChapter> {
+        const createdChapter = new this.chapterModel(chapter);
+        return await createdChapter.save();
     }
 
     async removeChapter(chapterId: string): Promise<string> {

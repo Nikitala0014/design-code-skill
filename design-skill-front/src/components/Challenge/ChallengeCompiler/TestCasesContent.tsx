@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const TestCasesContent = ({status, input, userOutput, expectedOutput}) => {
-    const compilerMessage = status === 'error' ? 'Неправильный ответ' : 'Ответ верный'
+export const TestCasesContent = ({status, input, result, expected}) => {
+    const compilerMessage = status === 'Error' ? 'Неправильный ответ' : 'Ответ верный'
     return (
         <div className="tab-list-content pMHT pMHB pRL pLL">
             <div className="flex flex-column flex-wrap tab-pane-content">
@@ -30,7 +30,7 @@ export const TestCasesContent = ({status, input, userOutput, expectedOutput}) =>
                             </li>
                             <li className="flex">
                                 <span className="lines-container__content-wrapper">
-                                    <pre className="lines-container__content">{input.join(' ')}</pre>
+                                    <pre className="lines-container__content">{input}</pre>
                                 </span>
                             </li>
                         </ul>
@@ -44,7 +44,7 @@ export const TestCasesContent = ({status, input, userOutput, expectedOutput}) =>
                         <ul className="lines-container">
                             <li className="flex">
                                 <span className="lines-container__content-wrapper">
-                                    <pre className="lines-container__content">{userOutput}</pre>
+                                    <pre className="lines-container__content">{result}</pre>
                                 </span>
                             </li>
                         </ul>
@@ -58,7 +58,7 @@ export const TestCasesContent = ({status, input, userOutput, expectedOutput}) =>
                         <ul className="lines-container">
                             <li className="flex">
                                 <span className="lines-container__content-wrapper mLS mRS pTS">
-                                    <pre className="lines-container__content pmB pmT">{expectedOutput}</pre>
+                                    <pre className="lines-container__content pmB pmT">{expected}</pre>
                                 </span>
                             </li>
                         </ul>

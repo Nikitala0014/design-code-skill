@@ -1,42 +1,90 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { server } from '../../utils/helper';
 
 import {
     IChallenge,
     IChallengeCard,
     IChallengeDetails,
+    IContentSubmission,
 } from '../../interfaces/challenge.interface';
-import { challenges } from './make-do';
+// import { challenges } from './make-do';
 
 const initialState = {
-    filters: {
-        status: 'unsolved',
-        difficulty: '',
-    },
-    chapter: '',
-    challenges: challenges as IChallenge[],
+    chapterId: '',
+    challengeId: '',
+    submitedCodeId: '',
+    challenges: [] as IChallenge[],
 };
-export const fetchChallenges = createAsyncThunk(
-    'challenges/fetchChallenges', 
+
+export const valideSubmitedCode = createAsyncThunk (
+    'challenges/valideSubmitedCode',
+    async (payload: {challengeId: string, userId: string, submitedCode: string}) => {
+        return await axios.post(
+            `${server.baseUrl}/challenges/valideSubmitedCode`,
+            payload,
+        ).then((res) => res.data).catch((error) => error);
+    } 
+)
+
+export const fetchChallenges = createAsyncThunk (
+    'challenges/fetchChallenges',
     async (chapterId: string) => {
-        const response = await fetch(
-            `localhost:8000/challenges/getChallengesByChapterId/${chapterId}`, 
-            { method: 'POST' },
-        );
-        return response.text;
+        return await axios.get(
+            `${server.baseUrl}/challenges/fetchChallenges/${chapterId}`
+        ).then((res) => res.data).catch((error) => error)
+    }
+)
+
+export const saveNewChallenge = createAsyncThunk (
+    'challenges/saveNewChallenge',
+    async (payload: IChallenge) => {
+        return await axios.post(
+            `${server.baseUrl}/challenges/saveNewChallenge`,
+            payload
+        ).then((res) => res.data).catch((error) => error)
     }
 );
 
-export const saveNewChallenge = createAsyncThunk(
-    'challenges/saveNewChallenge',
-     async (challenge: IChallenge) => {
-        const initialChallenge = { challenge };
-        const response = await fetch(
-            'localhost:8000/challenges/addChallenge',
-            { method: 'POST', body: initialChallenge as any },
-        );
-        return response.text;
+export const saveEditContentProblem = createAsyncThunk (
+    'challenges/saveEditContentProblem',
+    async (payload: {_id: string, contentProblem: string}) => {
+        const { _id, contentProblem } = payload;
+        return await axios.put(
+            `${server.baseUrl}/challenges/saveEditContentProblem/${_id}`,
+            { contentProblem: contentProblem },
+        ).then((res) => res.data).catch((error) => error);
     }
-);
+)
+
+export const saveEditContentCode = createAsyncThunk (
+    'challenges/saveEditContentCode',
+    async (payload: {
+        _id: string, 
+        contentCode: {
+            code: string,
+            cases: IChallenge["content"]["contentCode"]["cases"]
+        }
+    }
+    ) => {
+        const { _id, contentCode } = payload;
+        return await axios.put(
+            `${server.baseUrl}/challenges/saveEditContentCode/${_id}`,
+            { contentCode: contentCode },
+        ).then((res) => res.data).catch((error) => error);
+    }
+)
+
+export const saveEditContentEditorial = createAsyncThunk (
+    'challenges/saveEditContentEditorial',
+    async (payload: {_id: string, contentEditorial: string}) => {
+        const { _id, contentEditorial } = payload;
+        return await axios.put(
+            `${server.baseUrl}/challenges/saveEditContentEditorial/${_id}`,
+            { contentEditorial: contentEditorial },
+        ).then((res) => res.data).catch((error) => error);
+    }
+)
 
 export const removeChallenge = createAsyncThunk(
     'challenges/removeChallenge',
@@ -105,13 +153,13 @@ interface ContentCodeUpdate {
     contentCode: string,
 }
 
-export const updateChallengeContentCode = createAsyncThunk(
+export const updateChallengeContentCode = createAsyncThunk (
     'challenges/updateChallengeContentCode',
     async (payload: ContentCodeUpdate) => {
         const { _id, contentCode } = payload;
-        const response = await fetch(
+        const response = await fetch (
             `localhost:8000/challenges/updateChallengeContentCode/${_id}`,
-            { method: 'UPDATE', body: contentCode as any }
+            { method: 'UPDATE', body: contentCode as any, }
         );
         return response.text
     }
@@ -121,19 +169,22 @@ const challengesSlice = createSlice({
     name: 'challenges',
     initialState,
     reducers: {
-        challengesLoaded(state, action: PayloadAction<IChallenge[]>) {
-            state.challenges = action.payload;
+        challengesLoaded(
+            state, 
+            action: PayloadAction<{chapterId: string, challenges: IChallenge[]}>,
+        ) {
+            state.chapterId = action.payload.chapterId;
+            state.challenges = action.payload.challenges;
         },
-        challengesAdded(state, action: PayloadAction<IChallenge>) {
-            state.challenges.push(action.payload);
+        challengeAdded(state, action: PayloadAction<IChallenge>) {
+            console.log('challenge added with data: ', action.payload);
+            return {...state, challenges: [
+                ...state.challenges,
+                action.payload
+            ]}
         },
-        newStatusFilter(state, action: PayloadAction<string>) {
-            const status = state.filters.status === action.payload ? '' : action.payload;
-            state.filters.status = status;
-        },
-        newDifficultyFilter(state, action: PayloadAction<string>) {
-            const diff = state.filters.difficulty === action.payload ? '' : action.payload;
-            state.filters.difficulty = diff;
+        setChallengeId(state, action: PayloadAction<string>) {
+            state.challengeId = action.payload;
         },
         challengeEditTitle(state, action: PayloadAction<{_id: string, title: string}>) {
             const { _id, title } = action.payload;
@@ -204,19 +255,73 @@ const challengesSlice = createSlice({
             const { _id, challengeContentCode } = action.payload;
             state.challenges.map((challenge) => {
                 return challenge._id === _id
-                    ? challenge.content.contentCode = challengeContentCode
+                    ? challenge.content.contentCode.code = challengeContentCode
                     : challenge;
             });
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchChallenges.fulfilled, (_, action) => {
-                challengesLoaded(action.payload as any);
+            .addCase(valideSubmitedCode.fulfilled, (
+                state, action: PayloadAction<IContentSubmission>
+            ) => {
+                state.challenges.map((challenge) => {
+                    return challenge._id === action.payload.challengeId 
+                        ? challenge.challengeCodeSubmissions?.push(action.payload)
+                        : challenge;
+                })
+                state.submitedCodeId = action.payload.submitedCodeId;
             })
-            .addCase(saveNewChallenge.fulfilled, (_, action) => {
-                challengesAdded(action.payload as any);
+            .addCase(fetchChallenges.fulfilled, (
+                state, 
+                action: PayloadAction<{chapterId: string, challenges: IChallenge[]}>
+            ) => {
+                const { chapterId, challenges } = action.payload;
+                return {
+                    ...state, 
+                    challenges: challenges || [] as IChallenge[],
+                    chapterId: chapterId || '',
+                }
             })
+            .addCase(saveNewChallenge.fulfilled, (
+                state, 
+                action: PayloadAction<IChallenge>,
+            ) => {
+                return {...state, challenges: [
+                    ...state.challenges,
+                    action.payload
+                ]}
+            })
+            .addCase(saveEditContentProblem.fulfilled, (
+                state, action: PayloadAction<IChallenge> 
+            ) => {
+                const { _id, content } = action.payload;
+                state.challenges.map((challenge) => {
+                    return challenge._id === _id 
+                        ? challenge.content.contentProblem = content.contentProblem
+                        : challenge;
+                })
+            })
+            .addCase(saveEditContentCode.fulfilled, (
+                state, action: PayloadAction<IChallenge> 
+            ) => {
+                const { _id, content } = action.payload;
+                state.challenges.map((challenge) => {
+                    return challenge._id === _id 
+                        ? challenge.content.contentCode = content.contentCode
+                        : challenge;
+                })
+            }) 
+            .addCase(saveEditContentEditorial.fulfilled, (
+                state, action: PayloadAction<IChallenge> 
+            ) => {
+                const { _id, content } = action.payload;
+                state.challenges.map((challenge) => {
+                    return challenge._id === _id 
+                        ? challenge.content.contentEditorial = content.contentEditorial
+                        : challenge
+                })
+            }) 
             .addCase(removeChallenge.fulfilled, (_, action) => {
                 challengeRemoved(action.payload as any);
             })
@@ -237,9 +342,7 @@ const challengesSlice = createSlice({
 
 export const { 
     challengesLoaded, 
-    challengesAdded,
-    newStatusFilter,
-    newDifficultyFilter,
+    challengeAdded,
     challengeEdit,
     challengeDelete,
     challengeEditTitle,
@@ -248,6 +351,7 @@ export const {
     challengeDetailsUpdated,
     challengeContentProblemUpdated,
     challengeContentCodeUpdated,
+    setChallengeId,
 } = challengesSlice.actions;
 
 export default challengesSlice.reducer;

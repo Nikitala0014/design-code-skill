@@ -1,0 +1,51 @@
+@import '../../scss/variables';
+@import '../../scss//mixins';
+
+.landing-page {
+    width: 600px;
+    height: 450px;
+    box-shadow: $bsw;
+    margin: 60px auto;
+    // justify-content: center;
+}
+
+.landing-section-nav {
+    justify-content: center;
+
+    .landing-link {
+        margin: $mL;
+        color: $mainLinkColor;
+        font-size: 20px;
+        border-radius: 3px;
+
+        &.active {
+            background-color: white;
+        }
+    }
+}
+
+.landing-form {
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    input {
+        border: none;
+        outline: none;
+        box-shadow: $bswChSection;
+        padding: $pS;
+        min-width: 250px !important;
+        text-align: center
+    }
+}
+
+.landing-btn-form {
+    @include MBtnCard(white, $fwSmall, $textColAddBtn, $borderBtnAddCol);
+    padding: $pS;
+    font-size: 18px;
+    min-width: 100px;
+}
+
+.message {
+    font-size: 18px;
+}

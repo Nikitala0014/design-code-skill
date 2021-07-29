@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import './ChallengeCompiler.scss';
 
-import { ISubmissionData } from '../ChallengeSections/SubmissionsSection/SubmissionDetails/SubmissionDetails'
+import { ISubmissionData } from '../../../interfaces/challenge.interface';
 import { TestCasesList } from './TestCasesList';
 import { TestCasesContent } from './TestCasesContent';
 
-// {status, input, expectedOutput}
-export const ChallengeCompiler = (cases: ISubmissionData[]) => {
-    const [case_0, case_1, case_2] = [cases[0], cases[1], cases[2]] 
+export const ChallengeCompiler = ({cases}) => {
+    const {case_result_0, case_result_1, case_result_2} = cases; 
     const [selectedCase, setSelectedCase] = useState('0')
-    const caseToView = selectedCase === '0' ? case_0 : selectedCase === '1' ? case_1 : case_2;
-    const { status, input, userOutput, expectedOutput } = caseToView;
-    const caseStatus_0 = case_0.status === 'error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
-    const caseStatus_1 = case_1.status === 'error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
-    const caseStatus_2 = case_2.status === 'error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
+    const caseToView = (selectedCase === '0') 
+        ? (case_result_0) 
+        : (selectedCase === '1' ? case_result_1 : case_result_2);
+    const { status, input, result, expected } = caseToView as ISubmissionData["case_result_0"];
+    const caseStatus_0 = case_result_0.status === 'Error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
+    const caseStatus_1 = case_result_1.status === 'Error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
+    const caseStatus_2 = case_result_2.status === 'Error' ? 'tab-item-color-error' : 'tab-item-color-success'; 
 
     return (
         <div className="tc-container">
@@ -26,8 +27,8 @@ export const ChallengeCompiler = (cases: ISubmissionData[]) => {
                 <TestCasesContent
                     status={status}
                     input={input}
-                    userOutput={userOutput}
-                    expectedOutput={expectedOutput}
+                    result={result}
+                    expected={expected}
                 />
             </div>
         </div>

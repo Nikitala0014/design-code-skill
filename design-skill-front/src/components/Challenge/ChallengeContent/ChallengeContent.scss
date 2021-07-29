@@ -6,32 +6,66 @@
 
 .challenge-editorial-section {
     margin-bottom: 60px;
+
 }
 
 .code-editor-section {
     position: relative;
     display: block;
+    margin-bottom: 60px;
+}
+
+.compiler-section {
+    margin-top: -40px;
+    margin-bottom: 60px;
 }
 
 .code-editor-wrapper {
     padding: 25px;
     background-color: rgb(255, 255, 255);
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .challenge-problem-wrapper {
     color: $mainTextColor;
     background-color: rgb(255, 255, 255);
+    min-height: 100px;
+    line-height: 2em;
 }
 
 .challenge-editorial-wrapper {
     color: $mainTextColor;
     background-color: rgb(255, 255, 255);
+    min-height: 100px;
+    line-height: 2em;
 }
 
 .run-code-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+    margin-top: -40px;
+}
+
+.code-editor-cases {
+    margin-bottom: 60px;
+}
+
+.code-editor-case__input {
+    min-width: 50px;
+    margin: 10px;
+    padding: 5px;
+    width: auto;
+    height: auto;
+    color: $mainTextColor;
+
+    input {
+        border: none;
+        outline: none;
+        margin-left: 5px;
+        box-shadow: $bswHeaderCh;
+    }
 }
 
 .btn-primary {

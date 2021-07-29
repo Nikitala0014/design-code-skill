@@ -1,11 +1,14 @@
 @import '../../scss/variables';
 
 .challenges-content {
-    background-color: $mainBackground;
     color: $additionColor;
     font-size: 14px;
 }
 
+.challenges-header {
+    box-shadow: $bswHeaderCh;
+    background-color: #fff;
+}
 .challenges-title {
     font-weight: $fwLarge;
     font-size: 26px;

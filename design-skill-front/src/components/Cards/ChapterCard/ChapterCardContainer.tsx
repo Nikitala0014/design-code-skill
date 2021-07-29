@@ -4,47 +4,40 @@ import './ChapterCard.style.scss'
 
 import { RootState, useAppDispatch } from '../../../store/store';
 import { 
-    chapterCardEditTitle, 
-    chapterCardEditDetail, 
-    deleteChapter, 
-    chaptersAdded,
+    chapterEdit, 
+    deleteChapter,
 } from '../../../store/reducers/chaptersReducer';
 import { fetchChallenges } from '../../../store/reducers/challengesReducer';
 import { IChapter } from '../../../interfaces/chapter.interface';
 
 import { ChapterCardView } from './ChapterCardView';
 
-export default function ChapterCard({_id, route, classNameChapter}) {
-    const role = useSelector((state: RootState) => state.chapters.role);
+export default function ChapterCard({_id}) {
+    const role = useSelector((state: RootState) => state.user.user.role);
     const course = useSelector((state: RootState) => state.chapters.course);
-    const title = useSelector((state: RootState) => {
-        const chapter = state.chapters.chapters.find((chapter: IChapter) => chapter._id === _id);
-        return chapter?.title;
-    });
-    const detail = useSelector((state: RootState) => {
-        const chapter = state.chapters.chapters.find((chapter: IChapter) => chapter._id === _id);
-        return chapter?.detail;
+    const chapter = useSelector((state: RootState) => {
+        return state.chapters.chapters.find((chapter: IChapter) => chapter._id === _id);
     });
     const dispatch = useAppDispatch();
 
     const handleSeeChallenges = () => dispatch(fetchChallenges(_id));
-    const handleChangeTitle = (e) => dispatch(chapterCardEditTitle({_id, title: e.target.value, detail: ''}));
-    const handleChangeDetail = (e) => dispatch(chapterCardEditDetail({_id, title: '', detail: e.target.value}));
+    const handleChangeCard = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        dispatch(chapterEdit({_id, item: [name, value]}))
+    }
     const handleDeleteChapter = () => dispatch(deleteChapter(_id));
-    const handleAddChapter = () => {dispatch(chaptersAdded({_id: '10', title: title as string, detail: detail as string}))}
 
     return (
         <ChapterCardView
-            chapter={{_id, title, detail, route}}
+            chapter={chapter}
             callbacks={{
-                handleChangeTitle,
-                handleChangeDetail,
-                handleAddChapter,
                 handleDeleteChapter,
                 handleSeeChallenges,
+                handleChangeCard,
             }}
             role={role}
-            style={classNameChapter}
+            classForCard="chapter-card"
             course={course}
         />
     )

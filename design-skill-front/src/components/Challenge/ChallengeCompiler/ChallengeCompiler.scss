@@ -6,10 +6,14 @@
 
 .test-cases-result-wrapper {
     min-height: 430px;
-    max-height: 430px;
+    max-height: 500px;
     box-shadow: 0 6px 16px 0 rgba(0, 0, 0, .2);
     width: 100%;
     flex: 1;
+}
+
+.lines-container__content {
+    padding: $pS;
 }
 
 .render-list-cases {
@@ -26,9 +30,11 @@
     overflow-y: auto;
 }
 
-.tab-item {
+.tab-item-cases {
     background: transparent;
     cursor: pointer;
+    font-size: 18px;
+    padding: $pS;
 }
 
 .tab-item-color-error {

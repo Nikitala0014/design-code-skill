@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
-import { ChapterFormView } from './ChapterFormView';
+import { IChapter } from '../../../interfaces/chapter.interface';
+import { ChapterCardView } from '../../Cards/ChapterCard/ChapterCardView';
 import { saveNewChapter } from '../../../store/reducers/chaptersReducer';
 
-export default function ChapterForm() {
-    const [title, setTitle] = useState('');
-    const [detail, setDetail] = useState('');
+export const ChapterForm = () => {
+    const role = useAppSelector((state) => state.user.user.role);
+    // context
+    const course = useAppSelector((state) => state.chapters.course);
+    const [title, setTitle] = useState('Chapter Name');
+    const [detail, setDetail] = useState('Enter here detail of new chapter');
     const dispatch = useAppDispatch();
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        dispatch(saveNewChapter({title, detail}));
-        setTitle('');
-        setDetail('');
+    const handleAddChapter = async () => {
+        await dispatch(saveNewChapter({
+            title: title,
+            detail: detail
+        } as IChapter));
+        setTitle('Chapter Name');
+        setDetail('Enter here detail of new chapter');
     }
 
-    function handleChange(e) {
+    const handleChangeCard = (e) => {
         e.preventDefault();
         const name = e.target.name;
         const value = e.target.value;
         switch (name) {
-            case 'title':
+            case 'chapter-title':
                 setTitle(value)
                 break;
-            case 'detail':
+            case 'chapter-detail':
                 setDetail(value)
                 break
             default:
@@ -33,11 +39,19 @@ export default function ChapterForm() {
     }
 
     return (
-        <ChapterFormView
-            title={title}
-            detail={detail}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
+        <ChapterCardView
+            chapter={{
+                _id: '0',
+                title: title,
+                detail: detail,
+            }}
+            callbacks={{
+                handleChangeCard,
+                handleAddChapter
+            }}
+            role={role}
+            course={course}
+            classForCard="chapter-card-form-to-add"
         />
     )
 }

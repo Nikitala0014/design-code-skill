@@ -4,18 +4,18 @@ import { ChapterService } from './chapter.service';
 import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterCardDto } from './dto/update-chapter-card.dto';
 
-@Controller('chapter')
+@Controller('chapters')
 export class ChapterController {
     constructor(private chapterService: ChapterService) {}
 
-    @Get()
+    @Get('fetchChapters')
     getChapters() {
         return this.chapterService.getChapters();
     }
 
-    @Post()
-    addChapter(@Body() createChapterDto: CreateChapterDto) {
-        return this.chapterService.addChapter(createChapterDto);
+    @Post('saveNewChapter')
+    async addChapter(@Body() createChapterDto: CreateChapterDto) {
+        return await this.chapterService.addChapter(createChapterDto);
     }
 
     @Delete()

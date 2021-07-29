@@ -1,4 +1,6 @@
-export const ChaptersView = ({renderedListChapterCard}) => {
+import { ChapterForm } from '../Forms/ChapterForm/ChapterFormContainer';
+
+export const ChaptersView = ({renderedListChapterCard, role}) => {
     return (
         <>
             <header className="chapters-header mS">
@@ -35,6 +37,7 @@ export const ChaptersView = ({renderedListChapterCard}) => {
                 <div className="container">
                     <div className="chapters-content-playlist flex flex-row flex-justify-start flex-wrap">
                         {renderedListChapterCard}
+                        { role !== 'User' && <ChapterForm /> }
                     </div>
                 </div>
             </main>

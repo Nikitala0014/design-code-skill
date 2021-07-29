@@ -1,37 +1,33 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { server } from '../../utils/helper'
 
 import { IChapter } from '../../interfaces/chapter.interface';
 
 
 // type SliceState = { state: 'loading' } | { state: 'finished', data: IChapter[] }
 const initialState = {
-    role: 'Root',
     loading: 'Loading',
-    chapters: [
-        { _id: '1', title: 'Arrays', detail: '70% of companies test this subject' },
-        { _id: '2', title: 'Sorting', detail: '40% of companies test this subject' },
-        { _id: '3', title: 'Recursion', detail: '20% of companies test this subject' },
-        { _id: '4', title: 'Recursion', detail: '20% of companies test this subject' },
-        { _id: 'newChapter', title: 'New Chapter', detail: 'Enter this detail of new Chapter' },
-    ] as IChapter[],
+    chapters: [] as IChapter[],
     course: 'interview',
 };
 
 export const fetchChapters = createAsyncThunk('chapters/fetchChapters', 
 async () => {
-    const response = await fetch('localhost:8000/chapters/getChapters');
-    return response.text;
+    return await axios.get(
+        `${server.baseUrl}/chapters/fetchChapters`
+    ).then((res) => res.data).catch((error) => error);
 });
 
-export const saveNewChapter = createAsyncThunk('chapters/saveNewChapter', 
-async (chapter: IChapter) => {
-    const initialChapter = { chapter };
-    const response = await fetch(
-        'localhost:8000/chapters/addChapter', 
-        { method: 'POST', body: initialChapter as any },
-    );
-    return response.text;
-});
+export const saveNewChapter = createAsyncThunk(
+    'chapters/saveNewChapter',
+    async(payload: IChapter) => {
+        return await axios.post(
+            `${server.baseUrl}/chapters/saveNewChapter`,
+            payload,
+        ).then((res) => res.data).catch((error) => error);
+    }
+)
 
 export const removeChapter = createAsyncThunk('chapters/removeChapter', 
 async ({_id}: IChapter) => {
@@ -67,22 +63,21 @@ const chaptersSlice = createSlice({
         chaptersAdded(state, action: PayloadAction<IChapter>) {
             state.chapters.push(action.payload)
         },
-        chapterCardEditTitle(state, action: PayloadAction<IChapter>) {
-            const {_id, title} = action.payload;
-
-            const chapters = state.chapters
-            chapters.map((chapter: IChapter) => {
-                if (chapter._id === _id) {
-                    chapter.title = title;
-                }
-                return chapter
-            })
-            state.chapters = chapters;
-        },
-        chapterCardEditDetail(state, action: PayloadAction<IChapter>) {
-            const { _id, detail } = action.payload;
+        chapterEdit(state, action: PayloadAction<{_id: string, item: string[]}>) {
+            const { _id, item } = action.payload;
+            const [name, value] = [item[0], item[1]];
             state.chapters.map((chapter: IChapter) => {
-                return chapter._id === _id ? chapter.detail = detail : chapter;
+                if (chapter._id === _id) {
+                    switch (name) {
+                        case 'chapter-title':
+                            return chapter.title = value;
+                        case 'chapter-detail':
+                            return chapter.detail = value;
+                        default:
+                            break;
+                    }
+                }
+                return chapter;
             })
         },
         deleteChapter(state, action: PayloadAction<string>) {
@@ -104,11 +99,22 @@ const chaptersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(saveNewChapter.fulfilled, (_, action) => {
-                chaptersAdded(action.payload as any);
+            .addCase(fetchChapters.fulfilled, (
+                state, action: PayloadAction<IChapter[]>
+            ) => {
+                return {
+                    ...state,
+                    chapters: action.payload
+                }
             })
-            .addCase(fetchChapters.fulfilled, (_, action) => {
-                chaptersLoaded(action.payload as any);
+            .addCase(saveNewChapter.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    chapters: [
+                        ...state.chapters,
+                        action.payload,
+                    ]
+                }
             })
             .addCase(removeChapter.fulfilled, (_, action) => {
                 chapterRemoved(action.payload as any);
@@ -122,8 +128,7 @@ const chaptersSlice = createSlice({
 export const {
     chaptersLoaded, 
     chaptersAdded, 
-    chapterCardEditTitle, 
-    chapterCardEditDetail,
+    chapterEdit, 
     deleteChapter,
     chapterRemoved,
     chapterCardUpdated,

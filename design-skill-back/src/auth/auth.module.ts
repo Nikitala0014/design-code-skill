@@ -21,6 +21,6 @@ import { User, UserSchema } from './schemas/user.schema';
     })],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],
-    exports: [PassportModule, JwtModule],
+    exports: [PassportModule, JwtModule, AuthService],
 })
 export class AuthModule {}

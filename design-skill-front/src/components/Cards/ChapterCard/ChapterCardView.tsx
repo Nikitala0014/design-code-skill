@@ -1,18 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const ChapterCardView = ({chapter, callbacks, role, style, course}) => {
+export const ChapterCardView = ({chapter, callbacks, role, course, classForCard}) => {
     const {_id, title, detail} = chapter;
     const {
         handleSeeChallenges,
-        handleChangeTitle, 
-        handleChangeDetail, 
+        handleChangeCard,
         handleAddChapter,
         handleDeleteChapter,
     } = callbacks;
 
     return (
-        <div data-testid={_id} className={`${style} pM mM`}>
+        <div data-testid={_id} className={`${classForCard} pM mM`}>
             {role === 'User' && 
                 <div className="chapter-card-content">
                     <h3 className="chapter-card-title">{title}</h3>
@@ -26,33 +25,31 @@ export const ChapterCardView = ({chapter, callbacks, role, style, course}) => {
                             type="text" 
                             name="chapter-title" 
                             value={title as string} 
-                            onChange={handleChangeTitle} />
+                            onChange={handleChangeCard} />
                     </h3>
                     <div className="chapter-card-detail mBM">
                         <input 
                             type="text" 
                             name="chapter-detail" 
                             value={detail as string} 
-                            onChange={handleChangeDetail} />
+                            onChange={handleChangeCard} />
                     </div>
                 </div>
             }
             <div className="flex flex-column flex-nowrap">
-                {style === 'chapter-card' && 
+                {_id !== '0' && 
                     <Link to={`/${course}/${title.toLowerCase()}/challenges`} className="link"> 
                         <button className="btn mTS mBS" onClick={handleSeeChallenges}>
                             See Challenges
                         </button>
                     </Link>
                 }
-                {style === 'new-chapter-card' &&
+                {_id === '0' &&
                     <button className="btn mTS mBS" onClick={handleAddChapter}>
                         Add Chapter
                     </button>
                 }
-                {   
-                    role === 'Root'
-                    &&
+                {(role === 'Root' && _id !== '0') &&
                     <button className="btn btn-delete mTS mBS" onClick={handleDeleteChapter}>
                         Delete Chapter
                     </button>

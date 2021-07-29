@@ -1,11 +1,12 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import * as bcrypt from 'bcrypt';
+
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt.interface';
 import { UserDto } from './dto/user.dto';
 import { User, UserDocument } from './schemas/user.schema';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,28 +15,43 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    async newUser ({ username, password }: UserDto): Promise<User> {
+    async createAnAccount (
+        { _username, _password, _role }: UserDto,
+    ): Promise<{accessToken: string, user: {_id: string, role: string, username: string}}> {
         const saltOrRounds = 10;
-        const passwordHash = await bcrypt.hash(password, saltOrRounds);
-        const userInDb = await this.userModel.findOne({username});
+        const passwordHash = await bcrypt.hash(_password, saltOrRounds);
+        const userInDb = await this.userModel.findOne({username: _username});
 
         if (userInDb) {
             throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
         }
 
-        const createdUser = new this.userModel({username, password: passwordHash});
-        return createdUser.save();
+        const createdUser = await new this.userModel(
+            {username: _username, password: passwordHash, role: _role}
+        ).save();
+        const token = this._createToken(createdUser)
+        const {_id, username, role} = createdUser
+        return { accessToken: token, user: {_id, username, role} };
     }
 
-    async login({ username, password }: UserDto): Promise<any> {
-        const user = await this.userModel.findOne({username})
-        const isMatch = await bcrypt.compare(password, user.password);
-
+    async logInAccount(
+        { _username, _password }: UserDto
+    ): Promise<{accessToken: string, user: {_id: string, role: string, username: string}}> {
+        const user = await this.userModel.findOne({username: _username})
+        const isMatch = await bcrypt.compare(_password, (user ? user.password : ''));
+        console.log('user', user);
+        console.log('is match', isMatch);
+        
+        
         if (user && isMatch) {
             const token = this._createToken(user);
-            return { accessToken: token }
+            const {_id, username, role} = user;
+            return { accessToken: token, user: {_id, username, role} };
         } else {
-            throw new Error('Username or password incorrect');
+            throw new HttpException({
+                status: HttpStatus.FORBIDDEN,
+                error: 'Username or password incorrect'
+            }, HttpStatus.FORBIDDEN);
         }
     }
 

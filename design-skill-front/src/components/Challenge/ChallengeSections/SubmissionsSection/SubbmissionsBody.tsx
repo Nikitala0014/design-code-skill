@@ -1,41 +1,25 @@
-import React from 'react'
+import React from 'react';
 
 import { TableRow } from './TableRow';
-import { ISubmitedCode } from '../../../../interfaces/challenge.interface';
+import { IContentSubmission } from '../../../../interfaces/challenge.interface';
 
-export const SubbmissionsBody = (submitedCodeList: ISubmitedCode[]=[]) => {
-    console.log('sub', submitedCodeList);
-    
-    
+export const SubbmissionsBody = ({submissions}) => {
     return (
         <>
-            {submitedCodeList.map((submitedCode: ISubmitedCode) => {
-                const { status, score, time, submitedCodeId } = submitedCode;
+            {submissions && submissions.map((submitedCode: IContentSubmission) => {
+                const { status, score, date, submitedCodeId } = submitedCode;
                 return (
-                    <div className="table-body">
+                    <div key={submitedCodeId} className="table-body">
                         <TableRow
                             status={status}
                             score={score}
-                            time={time}
+                            date={date}
                             submitedCodeId={submitedCodeId}
                         />
                     </div>
                 )
             })}
+            {(!submissions || submissions.length === 0) && <h3 className="pS">Not yet submissions</h3>}
         </>
-        // <div className="table-body">
-        //     <TableRow 
-        //         status="error"
-        //         score="0.0"
-        //         time="9 days ago"
-        //         submitedCodeId="102345"
-        //     />
-        //     <TableRow 
-        //         status="accepted"
-        //         score="20.0"
-        //         time="one year ago"
-        //         submitedCodeId="734970"
-        //     />
-        // </div>
     )
 }

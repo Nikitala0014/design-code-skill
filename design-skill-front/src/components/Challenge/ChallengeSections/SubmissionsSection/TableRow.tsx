@@ -1,16 +1,18 @@
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
-export const TableRow = ({status, score, time, submitedCodeId}) => {
+export const TableRow = ({status, score, date, submitedCodeId}) => {
     const { url } = useRouteMatch();
+    const dateSubmited = new Date(date); 
+    const dateToView = `${dateSubmited.getUTCDate()}.${(dateSubmited.getUTCMonth() + 1) < 10 && 0}${dateSubmited.getUTCMonth() + 1}.${dateSubmited.getFullYear()}`
     
     return (
         <div className="table-row-wrapper pLL pRL">
             <div className="table-row flex">
                 <div className="table-row-column ellipsis result">
-                    <div className={`ellipsisi ${status === 'error' 
+                    <div className={`ellipsisi ${status === 'Error' 
                             ? 'status-error' : 'status-accepted'}`}>
                         <span className="ui-cross">
-                            {status === 'error' ? 'Wrong Answer' : 'Accepted'}
+                            {status === 'Error' ? 'Wrong Answer' : 'Accepted'}
                         </span>
                     </div>
                 </div>
@@ -18,7 +20,9 @@ export const TableRow = ({status, score, time, submitedCodeId}) => {
                     <div className="ellipsis submission-score">{score}</div>
                 </div>
                 <div className="table-row-column ellipsis time">
-                    <div className="ellipsis submission-time">{time}</div>
+                    <div className="ellipsis submission-time">
+                        {dateToView}
+                    </div>
                 </div>
                 <div className="table-row-column ellipsis view-results">
                     <div className="ellipsis submission-result">

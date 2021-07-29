@@ -7,21 +7,21 @@ export const TestCasesList = ({selectedCase, setSelectedCase, casesStatus}) => {
         <div className="render-list-cases flex flex-wrap">
             <div className="tab-header-cases flex flex-column" role="tablist">
                 <button 
-                    className={`tab-item ${selectedCase === '0' && 'selected'}`} 
+                    className={`tab-item-cases ${selectedCase === '0' && 'selected'}`} 
                     onClick={() => setSelectedCase('0')}>
                     <div className={`testcase-tab-item ${caseStatus_0} flex`}>
                         <span className="tab-item-label">Sample test case 0</span>
                     </div>
                 </button>
                 <button 
-                    className={`tab-item ${selectedCase === '1' && 'selected'}`}
+                    className={`tab-item-cases ${selectedCase === '1' && 'selected'}`}
                     onClick={() => setSelectedCase('1')}>
                     <div className={`testcase-tab-item ${caseStatus_1}`}>
                         <span className="tab-item-label">Sample test case 1</span>
                     </div>
                 </button>
                 <button 
-                    className={`tab-item ${selectedCase === '2' && 'selected'}`}
+                    className={`tab-item-cases ${selectedCase === '2' && 'selected'}`}
                     onClick={() => setSelectedCase('2')}>
                     <div className={`testcase-tab-item ${caseStatus_2}`}>
                         <span className="tab-item-label">Sample test case 2</span>

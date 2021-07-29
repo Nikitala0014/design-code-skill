@@ -18,8 +18,7 @@ export default function ProfileContainer() {
             <ChallengeCard 
                 key={challenge._id as string}
                 _id={challenge._id as string}
-                route=''
-                classNameChallenge='bookmarked'
+                // classNameChallenge='bookmarked'
             />
         )
     });
@@ -28,8 +27,7 @@ export default function ProfileContainer() {
             <ChallengeCard 
                 key={challenge._id as string}
                 _id={challenge._id as string}
-                route=''
-                classNameChallenge='solved'
+                // classNameChallenge='solved'
             />
         )
     });
@@ -38,8 +36,7 @@ export default function ProfileContainer() {
             <ChallengeCard 
                 key={challenge._id as string}
                 _id={challenge._id as string}
-                route=''
-                classNameChallenge='attempted'
+                // classNameChallenge='attempted'
             />
         )
     });

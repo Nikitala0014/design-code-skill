@@ -1,44 +1,46 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { useAppSelector } from '../../../store/store';
 
 import './ChallengeContent.scss';
 
-import Editor from '../../Editor/Editor';
+import { IChallenge } from '../../../interfaces/challenge.interface';
 import { ProblemSection } from '../ChallengeSections/ProblemSection';
 import { EditorSection } from '../ChallengeSections/EditorSection';
 import { SubmissionsSection } from '../ChallengeSections/SubmissionsSection/SubmissionsSection';
 import { EditorialSection } from '../ChallengeSections/EditorialSection';
 
-import { code } from '../../../store/reducers/make-do';
-
-export default function ChallengeContent({problem, editorial}) {
-    const { isEditProblem, childrenProblem } = problem;
-    const { isEditEditorial, childrenEditorial } = editorial;
-    const contentProblem = document.createElement('div');
-    contentProblem.innerHTML = childrenProblem
-    const contentEditorial = document.createElement('div');
-    contentEditorial.innerHTML = childrenEditorial;
-
-    const { path } = useRouteMatch();
-
-    // function handleSubmit() {
-    //     console.log('submit code state');
-    // }
+export default function ChallengeContent() {
+    const challengeId = useAppSelector((state) => state.challenges.challengeId);
+    const challenge = useAppSelector((state) => 
+        state.challenges.challenges.find((challenge) => challenge._id === challengeId)
+    );
     
+    const { 
+        contentProblem, 
+        contentCode, 
+        contentEditorial,
+    } = challenge?.content as IChallenge["content"];
+    const { path } = useRouteMatch();
+    
+    const problemElement = document.createElement('div');
+    const editorialElement = document.createElement('div');
+    problemElement.innerHTML = contentProblem;
+    editorialElement.innerHTML = contentEditorial;
 
     return (
         <>
             <Switch>
                 <Route exact path={`/interview/:chapter/challenges/:content/problem`}>
                     <ProblemSection
-                        isEdit={isEditProblem}
-                        children={childrenProblem}
-                        content={contentProblem}
-                        Editor={Editor}
+                        children={contentProblem}
+                        content={problemElement}
+                        challengeId={challengeId}
                     />
                     <EditorSection
-                        code={code}
-                        Editor={Editor}
+                        challengeId={challengeId}
+                        contentCode={contentCode}
+                        codeSubmissions={challenge?.challengeCodeSubmissions}
                     />
                 </Route>
                 <Route path={`${path}/submissions`}>
@@ -46,10 +48,9 @@ export default function ChallengeContent({problem, editorial}) {
                 </Route>
                 <Route path={`/interview/:chapter/challenges/:content/editorial`}>
                     <EditorialSection
-                        isEdit={isEditEditorial}
-                        children={childrenEditorial}
-                        content={contentEditorial}
-                        Editor={Editor}
+                        children={contentEditorial}
+                        content={editorialElement}
+                        challengeId={challengeId}
                     />
                 </Route>
             </Switch>

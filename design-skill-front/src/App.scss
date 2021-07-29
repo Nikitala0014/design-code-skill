@@ -1,5 +1,9 @@
 @import "./scss/variables";
 
+.theme-grey {
+    background: $mainBackground
+}
+
 .flex {
     display: flex;
 }
@@ -28,7 +32,9 @@
 .flex-start {
     align-items: flex-start;
 }
-.flex-justify-start
+.flex-justify-start {
+    justify-content: start;
+}
 
 .mBS {
     margin-bottom: $mS;

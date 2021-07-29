@@ -1,9 +1,5 @@
 @import '../../scss/variables';
 
-.theme-grey {
-    background: $mainBackground
-}
-
 .challenge-bsw {
     box-shadow: $bswChSection;
 }
@@ -18,6 +14,11 @@
 
 .container {
     margin: 0 auto;
+}
+
+.sections-btn-edit {
+    margin-top: -40px;
+    margin-bottom: 40px;
 }
 
 .panes-container {
@@ -61,4 +62,5 @@
 }
 .left-pane-challenge {
     flex: 1;
+    max-width: 900px !important;
 }

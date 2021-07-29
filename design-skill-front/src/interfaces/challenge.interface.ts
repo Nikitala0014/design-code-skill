@@ -1,17 +1,25 @@
 export interface IChallenge {
     _id?: string;
-    chapter?: {chapterId: string, chapterName: string};
+    chapterId: string;
     title: string;
     status: string;
     details: IChallengeDetails;
     preview: string;
     content: {
-        contentSubmissions?: ISubmitedCode[];
-        contentEditorial?: string;
+        contentEditorial: string;
         contentProblem: string,
-        contentCode: string,
+        contentCode: IContentCode,
     };
-    route?: string;
+    challengeCodeSubmissions?: IContentSubmission[];
+}
+
+export interface IContentCode {
+    code: string;
+    cases: {
+        case_0: {input: string, expectedOutput: string},
+        case_1: {input: string, expectedOutput: string},
+        case_2: {input: string, expectedOutput: string},
+    }
 }
 
 export interface IChallengeCard {
@@ -29,30 +37,23 @@ export interface IChallengeDetails {
     successRatio: string;
 }
 
-export interface ISubmissionsBody {
-    
-}
-
-export interface ISubmitedCode {
+export interface IContentSubmission {
+    challengeId: string;
+    userId: string;
     status: string;
     score: number;
-    time: string;
+    date: number;
     submitedCodeId: string;
-    details?: ISubmissionDetails[]
+    submissionDetails: ISubmissionDetails
 }
 
 export interface ISubmissionData {
-    status: string;
-    input: number[];
-    userOutput: string;
-    expectedOutput: string;
+    case_result_0: {status: string, input: string, result: string, expected: number},
+    case_result_1: {status: string, input: string, result: string, expected: number},
+    case_result_2: {status: string, input: string, result: string, expected: number},
 }
 
 export interface ISubmissionDetails {
-    time: string;
-    score: string;
-    status: string;
-    submitedCodeId: string;
     submitedCode: string;
-    submissionData?: ISubmissionData[];
+    submissionData?: ISubmissionData;
 }

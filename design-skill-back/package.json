@@ -30,6 +30,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/passport-jwt": "^3.0.6",
     "@types/passport-local": "^1.0.34",
+    "@types/shortid": "^0.0.29",
     "bcrypt": "^5.0.1",
     "mongoose": "^5.12.13",
     "passport": "^0.4.1",
@@ -37,7 +38,8 @@
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6"
+    "rxjs": "^6.6.6",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",

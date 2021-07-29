@@ -1,7 +1,8 @@
 export interface IUser {
+    _id: string;
     role: string;
-    nickName: string;
-    challengesBookmarked: string[];
-    challengesSolved: string[];
-    challengesAttempted: string[];
+    username: string;
+    challengesBookmarked?: string[];
+    challengesSolved?: string[];
+    challengesAttempted?: string[];
 }
