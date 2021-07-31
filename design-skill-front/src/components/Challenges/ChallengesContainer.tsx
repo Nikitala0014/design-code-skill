@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import './Challenges.style.scss';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { RootState } from '../../store/store';
+import { useAppSelector, useAppDispatch } from '../../store/store';
+import { fetchChallengesByChapterName } from '../../store/reducers/challengesReducer';
 import { IChallenge } from '../../interfaces/challenge.interface';
 import ChallengeCard from '../Cards/ChallengeCard/ChallengeCardContainer';
+import { UserRoleContext } from '../../Context';
 
 import { ChallengesView } from './ChallengesView';
 
-interface ChallengeRouteParams {
-    title: string
+interface ChallengesRouteParams {
+    chapter: string
 }
 
 export default function Challenges() {
-    //context
-    const role = useSelector((state: RootState) => state.user.user.role);
-    const {title} = useParams<ChallengeRouteParams>();
-    const challenges: IChallenge[] = useSelector((state: RootState) => state.challenges.challenges)
+    const role = useContext(UserRoleContext);
+    let { chapter } = useParams<ChallengesRouteParams>();
+    const challenges = useAppSelector((state) => state.challenges.challenges)
+    const dispatch = useAppDispatch();
 
     const handleChangeStatus = (e) => e.target.value;
     const handleChangeDifficulty = (e) => e.target.value;
@@ -30,9 +31,13 @@ export default function Challenges() {
             />
         )
     })
+
+    useEffect(() => {
+        dispatch(fetchChallengesByChapterName(chapter))
+    }, [dispatch, chapter])
     
     return <ChallengesView
-        title={title}
+        title={chapter}
         renderedChallengeCards={renderedChallengeCards}
         callbacks={{handleChangeStatus, handleChangeDifficulty}}
         role={role}

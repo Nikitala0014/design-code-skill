@@ -1,6 +1,7 @@
 export interface IChallenge {
     _id?: string;
     chapterId: string;
+    chapterName: string;
     title: string;
     status: string;
     details: IChallengeDetails;

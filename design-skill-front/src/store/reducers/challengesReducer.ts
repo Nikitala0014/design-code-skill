@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { server } from '../../utils/helper';
+import produce from 'immer';
 
 import {
     IChallenge,
@@ -8,9 +9,11 @@ import {
     IChallengeDetails,
     IContentSubmission,
 } from '../../interfaces/challenge.interface';
+import authHeader from '../../utils/authHeader';
 // import { challenges } from './make-do';
 
 const initialState = {
+    status: 'loading',
     chapterId: '',
     challengeId: '',
     submitedCodeId: '',
@@ -23,7 +26,8 @@ export const valideSubmitedCode = createAsyncThunk (
         return await axios.post(
             `${server.baseUrl}/challenges/valideSubmitedCode`,
             payload,
-        ).then((res) => res.data).catch((error) => error);
+            { headers: authHeader() },
+        ).then((res) => res.data);
     } 
 )
 
@@ -31,8 +35,18 @@ export const fetchChallenges = createAsyncThunk (
     'challenges/fetchChallenges',
     async (chapterId: string) => {
         return await axios.get(
-            `${server.baseUrl}/challenges/fetchChallenges/${chapterId}`
-        ).then((res) => res.data).catch((error) => error)
+            `${server.baseUrl}/challenges/fetchChallenges/${chapterId}`,
+            { headers: authHeader() },
+        ).then((res) => res.data);
+    }
+)
+export const fetchChallengesByChapterName = createAsyncThunk (
+    'challenges/fetchChallengesByChapterName',
+    async (chapterName: string) => {
+        return await axios.get(
+            `${server.baseUrl}/challenges/fetchChallengesByChapterName/${chapterName}`,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 )
 
@@ -41,8 +55,9 @@ export const saveNewChallenge = createAsyncThunk (
     async (payload: IChallenge) => {
         return await axios.post(
             `${server.baseUrl}/challenges/saveNewChallenge`,
-            payload
-        ).then((res) => res.data).catch((error) => error)
+            payload,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 );
 
@@ -53,7 +68,8 @@ export const saveEditContentProblem = createAsyncThunk (
         return await axios.put(
             `${server.baseUrl}/challenges/saveEditContentProblem/${_id}`,
             { contentProblem: contentProblem },
-        ).then((res) => res.data).catch((error) => error);
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 )
 
@@ -71,7 +87,8 @@ export const saveEditContentCode = createAsyncThunk (
         return await axios.put(
             `${server.baseUrl}/challenges/saveEditContentCode/${_id}`,
             { contentCode: contentCode },
-        ).then((res) => res.data).catch((error) => error);
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 )
 
@@ -82,18 +99,30 @@ export const saveEditContentEditorial = createAsyncThunk (
         return await axios.put(
             `${server.baseUrl}/challenges/saveEditContentEditorial/${_id}`,
             { contentEditorial: contentEditorial },
-        ).then((res) => res.data).catch((error) => error);
+            { headers: authHeader() },
+        ).then((res) => res.data);
+    }
+)
+
+export const saveEditChallengeCard = createAsyncThunk(
+    'challenges/saveEditChallengeCard',
+    async (payload: {_id: string, items: string[]}) => {
+        const { _id, items } = payload;
+        return await axios.put(
+            `${server.baseUrl}/challenges/saveEditChallengeCard/${_id}`,
+            items,
+            { headers: authHeader() }
+        ).then((res) => res.data);
     }
 )
 
 export const removeChallenge = createAsyncThunk(
     'challenges/removeChallenge',
     async (_id: string) => {
-        const response = await fetch(
+        return await axios.delete(
             `localhost:8000/challenges/removeChallenge/${_id}`,
-            { method: 'DELETE' },
-        );
-        return response.text;
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 );
 
@@ -106,11 +135,11 @@ export const updateChallengeCard = createAsyncThunk(
     'challenges/updateChallengeCard',
     async (payload: IChallengeCardUpdate) => {
         const { _id, challengeCardToUpdate } = payload;
-        const response = await fetch(
+        return await axios.put(
             `localhost:8000/challenges/updateChallengeCard/${_id}`,
-            { method: 'UPDATE', body: challengeCardToUpdate as any },
-        );
-        return response.text;
+            challengeCardToUpdate,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 );
 
@@ -123,11 +152,11 @@ export const updateChallengeDetails = createAsyncThunk(
     'challenges/updateChallengeDetails',
     async (payload: IChallengeDetailsUpdate) => {
         const { _id, details } = payload;
-        const response = await fetch(
+        return await axios.put(
             `localhost:8000/challenges/updateChallengeDetails/${_id}`,
-            { method: 'UPDATE', body: details as any },
-        );
-        return response.text;
+            details,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 );
 
@@ -140,11 +169,11 @@ export const updateChallengeContentProblem = createAsyncThunk(
     'challenges/updateChallengeContentProblem',
     async (payload: ContentProblemUpdate) => {
         const { _id, contentProblem } = payload
-        const response = await fetch(
+        return await axios.put(
             `localhost:8000/challenges/updateChallengeContentProblem/${_id}`,
-            { method: 'UPDATE', body: contentProblem as any },
-        );
-        return response.text;
+            contentProblem,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 );
 
@@ -157,11 +186,11 @@ export const updateChallengeContentCode = createAsyncThunk (
     'challenges/updateChallengeContentCode',
     async (payload: ContentCodeUpdate) => {
         const { _id, contentCode } = payload;
-        const response = await fetch (
+        return await axios.put(
             `localhost:8000/challenges/updateChallengeContentCode/${_id}`,
-            { method: 'UPDATE', body: contentCode as any, }
-        );
-        return response.text
+            contentCode,
+            { headers: authHeader() },
+        ).then((res) => res.data);
     }
 )
 
@@ -272,6 +301,19 @@ const challengesSlice = createSlice({
                 })
                 state.submitedCodeId = action.payload.submitedCodeId;
             })
+            .addCase(valideSubmitedCode.rejected, (
+                state, action,
+            ) => {
+                state.status = 'failed'
+            })
+            .addCase(fetchChallengesByChapterName.fulfilled, (
+                state, action: PayloadAction<IChallenge[]>
+            ) => {
+                return produce(state, draft => {
+                    draft.challenges = action.payload
+                    draft.status = 'working'
+                })
+            })
             .addCase(fetchChallenges.fulfilled, (
                 state, 
                 action: PayloadAction<{chapterId: string, challenges: IChallenge[]}>
@@ -281,7 +323,13 @@ const challengesSlice = createSlice({
                     ...state, 
                     challenges: challenges || [] as IChallenge[],
                     chapterId: chapterId || '',
+                    status: 'working',
                 }
+            })
+            .addCase(fetchChallenges.rejected, (
+                state, action,
+            ) => {
+                state.status = 'failed'
             })
             .addCase(saveNewChallenge.fulfilled, (
                 state, 
@@ -321,7 +369,28 @@ const challengesSlice = createSlice({
                         ? challenge.content.contentEditorial = content.contentEditorial
                         : challenge
                 })
-            }) 
+            })
+            .addCase(saveEditChallengeCard.fulfilled, (
+                state, action: PayloadAction<{
+                    _id: IChallenge["_id"],
+                    title: IChallenge["title"], 
+                    details: IChallenge["details"],
+                    preview: IChallenge["preview"]
+                }>
+            ) => {
+                const { _id, title, details, preview } = action.payload;
+                return produce(state, draft => {
+                    state.challenges = state.challenges.map((challenge) => {
+                        return challenge._id === _id ?
+                        produce (challenge, draft => {
+                            draft.title = title;
+                            draft.details = details;
+                            draft.preview = preview;
+                        })
+                        : challenge
+                    })
+                })
+            })
             .addCase(removeChallenge.fulfilled, (_, action) => {
                 challengeRemoved(action.payload as any);
             })

@@ -28,6 +28,7 @@ export const ChallengeForm = () => {
     const handleAddChallenge = async () => {
         await dispatch(saveNewChallenge({
             chapterId: chapterId,
+            chapterName: chapterName.toLocaleLowerCase(),
             title: title,
             status: 'unsolved',
             details: {

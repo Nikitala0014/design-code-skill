@@ -1,33 +1,33 @@
-import React from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './Navbar.scss';
+import { useAppSelector } from '../../store/store';
 
 export default function Navbar() {
+    const loggedIn = useAppSelector((state) => state.user.loggedIn)
     return (
         <nav className="community-header">
             <div className="nav-container flex flex-between">
                 <div className="header-nav-links">
                     <ul className="nav-links flex">
                         <li className="nav-link-item logo-wrap">
-                            <a href="/">
+                            <NavLink to="/">
                                 <div className="logo-section">
                                     DesignSkillCode 
                                 </div>
-                            </a>
+                            </NavLink>
                         </li>
                         <li className="nav-link-item">
-                            <a href="/interview" className="nav-link active">
+                            <NavLink to="/interview" className="nav-link">
                                 Интервью
-                            </a>
-                        </li>
-                        <li className="nav-link-item">
-                            <a href="/" className="nav-link">
-                                В процессе
-                            </a>
+                            </NavLink>
                         </li>
                     </ul>
                 </div>
                 <div className="profile-menu flex flex-row">
-                    <a href="/">Nikita Lavrenov</a>
+                    { loggedIn ? <NavLink to="/">Nikita Lavrenov</NavLink> 
+                        : <div className='nav-link'>Log in</div>
+                    }
                 </div>
             </div>
         </nav>

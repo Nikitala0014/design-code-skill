@@ -100,7 +100,7 @@ export const ChallengeCardView = ({challenge, role, callbacks, chapter, course, 
                 <span className="bookmark-cta"></span>
                 <div className="btn-container">
                     {_id !== '0' &&
-                        <Link to={`/${course}/arrays/challenges/${title}/problem`}>
+                        <Link to={`/${course}/${chapter}/challenges/${title}/problem`}>
                             <button className="btn-challenge pS mTS mBS mRS" onClick={handleSolveChallenge}>
                                 Solve Challenge
                             </button>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 import { ChallengeCompiler } from '../../Challenge/ChallengeCompiler/ChallengeCompiler';
@@ -10,8 +10,11 @@ import {
 } from '../../../store/reducers/challengesReducer';
 import { ChallengeSectionsBtnEdit } from './ChallengeSectionsBtnEdit';
 import { CodeEditorCase } from './CodeEditorCase';
+import { UserRoleContext } from '../../../Context';
 
 export const EditorSection = ({challengeId, contentCode, codeSubmissions}) => {
+    const role = useContext(UserRoleContext);
+    const status = useAppSelector((state) => state.challenges.status);
     const userId = useAppSelector((state) => state.user.user._id);
     const currentCodeId = useAppSelector((state) => state.challenges.submitedCodeId);
     const submissionData = currentCodeId && 
@@ -20,6 +23,7 @@ export const EditorSection = ({challengeId, contentCode, codeSubmissions}) => {
 
     const { code, cases } = contentCode as IChallenge["content"]["contentCode"];    
     const codeRef = useRef(code);
+    
     
     const [casesState, setCases] = useState({
         case_0: cases.case_0,
@@ -107,14 +111,24 @@ export const EditorSection = ({challengeId, contentCode, codeSubmissions}) => {
     return (
         <>
             <section className="code-editor-section">
-                <div className="code-editor-wrapper mBS challenge-bsw">
-                    <Editor 
-                        code={code} 
-                        lang="javascript"
-                        sectionRef={codeRef}
-                    />
-                </div>
+                {!isEdit &&
+                    <div className="code-editor-wrapper mBS challenge-bsw">
+                        <Editor 
+                            code={codeRef.current} 
+                            lang="javascript"
+                            sectionRef={codeRef}
+                        />
+                    </div>
+                }
                 {isEdit &&
+                <>
+                    <div className="code-editor-wrapper mBS challenge-bsw">
+                        <Editor 
+                            code={code} 
+                            lang="javascript"
+                            sectionRef={codeRef}
+                        />
+                    </div>
                     <div className="code-editor-cases flex flex-column">
                         <CodeEditorCase
                             value={casesState.case_0}
@@ -141,19 +155,25 @@ export const EditorSection = ({challengeId, contentCode, codeSubmissions}) => {
                             }}
                         />
                     </div>
+                </>
                 }
             </section>
-            <section className="sections-btn-edit">
-                <ChallengeSectionsBtnEdit 
-                    callbacks={{
-                        handleEditSection,
-                        handleCancelEdit,
-                        handleSaveEdit,
-                    }}
-                    isEdit={isEdit}
-                    sectionName='Editor'
-                />
-            </section>
+            {role === 'Root' &&
+                <section className="sections-btn-edit">
+                    <ChallengeSectionsBtnEdit 
+                        callbacks={{
+                            handleEditSection,
+                            handleCancelEdit,
+                            handleSaveEdit,
+                        }}
+                        isEdit={isEdit}
+                        sectionName='Editor'
+                    />
+                </section>
+            }
+            { status === 'failed' && <span className="error message">
+                Вы не можете сделать это, так как не вошли в систему
+                </span> }
             {!isEdit &&
                 <div className="plT pmL pmR pmB run-code-wrapper">
                     <button className="btn-normal btn-primary" onClick={handleSubmitCode}>

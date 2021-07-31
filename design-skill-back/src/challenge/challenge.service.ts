@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 // import * as fs from 'fs';
 import {generate} from 'shortid';
 
+import { AuthService } from '../auth/auth.service'
 import { 
     ChallengeDetailsDto,
     ChallengeDto, 
@@ -17,10 +18,17 @@ import { EChallengeKeys } from './constants';
 
 @Injectable()
 export class ChallengeService {
-    constructor (@InjectModel(Challenge.name) private challengeModel: Model<ChallengeDocument>) {}
+    constructor (
+        @InjectModel(Challenge.name) private challengeModel: Model<ChallengeDocument>,
+        private authService: AuthService
+    ) {}
 
-    gelChallengesByChapterId (_id: string): Promise<IChallenge[]> {
-        return this.challengeModel.find({chapterId: _id}).exec();
+    async getChallengesByChapterId (_id: string): Promise<IChallenge[]> {
+        return await this.challengeModel.find({chapterId: _id}).exec();
+    }
+    
+    async getChallengesByChapterName (name: string): Promise<IChallenge[]> {
+        return await this.challengeModel.find({chapterName: name}).exec()
     }
 
     async addChallenge (challenge: CreateChallengeDto): Promise<IChallenge> {
@@ -33,7 +41,8 @@ export class ChallengeService {
     ): Promise<IContentSubmission> {
         const { challengeId, userId, submitedCode } = payload;
         const challenge = await this.challengeModel.findById(challengeId);
-        const score = challenge.details.maxScore;
+        const { chapterName, title, details, preview } = challenge;
+        const score = details.maxScore;
         const {case_0, case_1, case_2} = challenge.content.contentCode.cases;
         const case_0_input = case_0.input.split(`,`).map((num) => parseInt(num))
         const case_1_input = case_1.input.split(`,`).map((num) => parseInt(num))
@@ -92,6 +101,17 @@ export class ChallengeService {
                 }},
                 { new: true },
             );
+            const userChallenge = {
+                _id: challengeId,
+                chapterName,
+                title,
+                details,
+                preview
+            }
+
+            status === 'Success' 
+                ? this.authService.addSolvedChallenge({userId, userChallenge})
+                : this.authService.addAttemtedChallenge({userId, userChallenge});
             
             return submission;
         } catch (error) {
@@ -130,6 +150,31 @@ export class ChallengeService {
             { $set: {'content.contentEditorial': contentEditorial} },
             { new: true },
         );
+    }
+
+    async saveEditChallengeCard (
+        payload: {_id: string, items: string[]}
+    ): Promise<IChallenge> {
+        const { _id, items } = payload;
+        const [name, value] = [items[0], items[1]]
+        console.log('name', name);
+        console.log('value', value);
+        switch (name) {
+            case 'challenge-title':
+                return this.challengeModel.findByIdAndUpdate(_id, {title: value}, {new: true});
+            case 'challenge-difficulty':
+                return this.challengeModel.findByIdAndUpdate(_id, {'details.difficulty': value}, {new: true});
+            case 'challenge-skill':
+                return this.challengeModel.findByIdAndUpdate(_id, {'details.skill': value}, {new: true});
+            case 'challenge-maxScore':
+                return this.challengeModel.findByIdAndUpdate(_id, {'details.maxScore': value}, {new: true});
+            case 'challenge-successRatio':
+                return this.challengeModel.findByIdAndUpdate(_id, {'details.successRatio': value}, {new: true});
+            case 'challenge-preview':
+                return this.challengeModel.findByIdAndUpdate(_id, {preview: value}, {new: true});
+            default:
+                break;
+        }
     }
 
     async removeChallenge (_id: ChallengeDto["_id"]): Promise<HttpStatus> {

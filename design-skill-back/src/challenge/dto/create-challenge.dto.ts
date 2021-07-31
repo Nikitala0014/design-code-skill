@@ -1,5 +1,6 @@
 export class CreateChallengeDto {
     readonly chapterId: string;
+    readonly chapterName: string;
     readonly title: string;
     readonly status: string;
     readonly details: {

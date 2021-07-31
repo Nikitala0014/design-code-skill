@@ -3,6 +3,8 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 
+import { IUserChallenge } from './interfaces/user-challenge.interface';
+import { IUser } from './interfaces/user.interface';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt.interface';
 import { UserDto } from './dto/user.dto';
@@ -29,8 +31,8 @@ export class AuthService {
         const createdUser = await new this.userModel(
             {username: _username, password: passwordHash, role: _role}
         ).save();
-        const token = this._createToken(createdUser)
-        const {_id, username, role} = createdUser
+        const {_id, username, role} = createdUser;
+        const token = this._createToken({_id, role, username})
         return { accessToken: token, user: {_id, username, role} };
     }
 
@@ -38,14 +40,12 @@ export class AuthService {
         { _username, _password }: UserDto
     ): Promise<{accessToken: string, user: {_id: string, role: string, username: string}}> {
         const user = await this.userModel.findOne({username: _username})
-        const isMatch = await bcrypt.compare(_password, (user ? user.password : ''));
-        console.log('user', user);
-        console.log('is match', isMatch);
         
+        const isMatch = await bcrypt.compare(_password, (user ? user.password : ''));
         
         if (user && isMatch) {
-            const token = this._createToken(user);
             const {_id, username, role} = user;
+            const token = this._createToken({_id, role, username});
             return { accessToken: token, user: {_id, username, role} };
         } else {
             throw new HttpException({
@@ -55,8 +55,8 @@ export class AuthService {
         }
     }
 
-    private _createToken ({username}: User): any {
-        const user: JwtPayload = {username};
+    private _createToken ({_id, username, role}: IUser): any {
+        const user: JwtPayload = {_id, username, role};
         const accessToken = this.jwtService.sign(user);
         return accessToken;
     }
@@ -69,5 +69,41 @@ export class AuthService {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userData } = user;
         return userData;
+    }
+
+    async fetchUserChallenges (
+        userId: string): Promise<{
+            challengesAttempted: IUserChallenge[], 
+            challengesSolved: IUserChallenge[]
+    }> {
+        const user = await this.userModel.findById(userId);
+        const { challengesAttempted, challengesSolved } = user
+        return { challengesAttempted, challengesSolved }
+    }
+    
+    async addAttemtedChallenge (
+        payload: {
+            userChallenge: IUserChallenge, 
+            userId: string
+        }
+    ): Promise<void> {
+        console.log('work attempted')
+
+        const { userChallenge, userId } = payload;
+        await this.userModel.findByIdAndUpdate(
+            userId, {$push: { 'challengesAttempted': userChallenge }}
+        )
+    }
+
+    async addSolvedChallenge (
+        payload: {
+            userChallenge: IUserChallenge, 
+            userId: string
+        }
+    ): Promise<void> {
+        const { userChallenge, userId } = payload;
+        await this.userModel.findByIdAndUpdate(
+            userId, {$push: { 'challengesSolved': userChallenge }}
+        )
     }
 }

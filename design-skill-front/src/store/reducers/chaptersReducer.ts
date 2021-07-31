@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { server } from '../../utils/helper'
+import produce from 'immer'
 
 import { IChapter } from '../../interfaces/chapter.interface';
+import authHeader from '../../utils/authHeader';
 
 
 // type SliceState = { state: 'loading' } | { state: 'finished', data: IChapter[] }
 const initialState = {
-    loading: 'Loading',
+    status: 'loading',
     chapters: [] as IChapter[],
     course: 'interview',
 };
@@ -15,8 +17,9 @@ const initialState = {
 export const fetchChapters = createAsyncThunk('chapters/fetchChapters', 
 async () => {
     return await axios.get(
-        `${server.baseUrl}/chapters/fetchChapters`
-    ).then((res) => res.data).catch((error) => error);
+        `${server.baseUrl}/chapters/fetchChapters`,
+        { headers: authHeader() },
+    ).then((res) => res.data)
 });
 
 export const saveNewChapter = createAsyncThunk(
@@ -28,6 +31,15 @@ export const saveNewChapter = createAsyncThunk(
         ).then((res) => res.data).catch((error) => error);
     }
 )
+
+export const saveEditChapterCard = createAsyncThunk('chaptes/saveEditChapterCard',
+async (payload: {_id: string, items: string[]}) => {
+    const { _id, items } = payload;
+    return await axios.put(`${server.baseUrl}/chapters/saveEditChapterCard/${_id}`,
+        items,
+        { headers: authHeader() },
+    ).then((res) => res.data);
+})
 
 export const removeChapter = createAsyncThunk('chapters/removeChapter', 
 async ({_id}: IChapter) => {
@@ -104,7 +116,16 @@ const chaptersSlice = createSlice({
             ) => {
                 return {
                     ...state,
-                    chapters: action.payload
+                    chapters: action.payload,
+                    status: 'working',
+                }
+            })
+            .addCase(fetchChapters.rejected, (
+                state, action
+            ) => {
+                return {
+                    ...state,
+                    status: 'failed',
                 }
             })
             .addCase(saveNewChapter.fulfilled, (state, action) => {
@@ -115,6 +136,24 @@ const chaptersSlice = createSlice({
                         action.payload,
                     ]
                 }
+            })
+            .addCase(saveEditChapterCard.fulfilled, (
+                state, action: PayloadAction<IChapter>,
+            ) => {
+                const { _id } = action.payload;
+                // state.chapters.map((chapter) => {
+                //     return chapter._id === _id ? action.payload : chapter;
+                // })
+                return produce(state, draft => {
+                    draft.chapters = draft.chapters.map((chapter) => {
+                        return chapter._id === _id 
+                        ? produce(chapter, draft => {
+                            draft.title = action.payload.title
+                            draft.detail = action.payload.detail
+                        })
+                        : chapter;
+                    })
+                })
             })
             .addCase(removeChapter.fulfilled, (_, action) => {
                 chapterRemoved(action.payload as any);

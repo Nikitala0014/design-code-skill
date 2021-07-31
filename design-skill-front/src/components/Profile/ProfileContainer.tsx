@@ -1,42 +1,56 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import React, { useEffect, useContext } from 'react';
+import { useAppSelector, useAppDispatch } from '../../store/store';
 import './Profile.scss';
 
-import { IChallenge } from '../../interfaces/challenge.interface';
-import ChallengeCard from '../Cards/ChallengeCard/ChallengeCardContainer';
+import { fetchUserChallenges } from '../../store/reducers/userReducer';
+import { ChallengeCardView } from '../Cards/ChallengeCard/ChallengeCardView';
+import { IUserChallenge } from '../../interfaces/user.interface';
+import { UserRoleContext } from '../../Context';
 
 import { ProfileView } from './ProfileView';
 
 export default function ProfileContainer() {
-    const challengesBookmarked = useSelector((state: RootState) => state.user.challengesBookmarked)
-    const challengesSolved = useSelector((state: RootState) => state.user.challengesSolved)
-    const challengesAttempted = useSelector((state: RootState) => state.user.challengesAttempted)
+    const role = useContext(UserRoleContext);
+    const course = useAppSelector((state) => state.chapters.course);
+    const userId = useAppSelector((state) => state.user.user._id);
+    const challengesSolved = useAppSelector((state) => state.user.challengesSolved)
+    const challengesAttempted = useAppSelector((state) => state.user.challengesAttempted)
+    const dispatch = useAppDispatch();
+    console.log('challengeSolved', challengesSolved);
+    console.log('challengesAttemted', challengesAttempted)
+    
 
-    const renderedChallengesBookmarked = challengesBookmarked.map((challenge: IChallenge) => {
+    useEffect(() => {
+        console.log('userId', userId);
+        
+        dispatch(fetchUserChallenges(userId))
+    }, [dispatch, userId])
+
+    const renderedChallengesSolved = challengesSolved.map(
+        (userChallenge: IUserChallenge) => {
         return (
-            <ChallengeCard 
-                key={challenge._id as string}
-                _id={challenge._id as string}
-                // classNameChallenge='bookmarked'
+            <ChallengeCardView
+                key={userChallenge._id as string}
+                challenge={userChallenge}
+                role='User'
+                callbacks={{}}
+                chapter={userChallenge.chapterName}
+                course={course}
+                classForCard="challenge-card"
             />
         )
     });
-    const renderedChallengesSolved = challengesSolved.map((challenge: IChallenge) => {
+    const renderedChallengesAttempted = challengesAttempted.map(
+            (userChallenge: IUserChallenge) => {
         return (
-            <ChallengeCard 
-                key={challenge._id as string}
-                _id={challenge._id as string}
-                // classNameChallenge='solved'
-            />
-        )
-    });
-    const renderedChallengesAttempted = challengesAttempted.map((challenge: IChallenge) => {
-        return (
-            <ChallengeCard 
-                key={challenge._id as string}
-                _id={challenge._id as string}
-                // classNameChallenge='attempted'
+            <ChallengeCardView
+                key={userChallenge._id as string}
+                challenge={userChallenge}
+                role='User'
+                callbacks={{}}
+                chapter={userChallenge.chapterName}
+                course={course}
+                classForCard="challenge-card"
             />
         )
     });
@@ -46,9 +60,8 @@ export default function ProfileContainer() {
         <>
             <ProfileView 
                 challenges={{
-                    bookmarked: renderedChallengesBookmarked,
                     solved: renderedChallengesSolved,
-                    attemted: renderedChallengesAttempted,
+                    attempted: renderedChallengesAttempted,
                 }}
             />
         </>

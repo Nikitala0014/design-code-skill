@@ -21,6 +21,22 @@ export class ChapterService {
         return await createdChapter.save();
     }
 
+    async saveEditChapterCard(payload: {_id, items}): Promise<IChapter> {
+        const { _id, items } = payload;
+        const [ name, value ] = [items[0], items[1]];
+        console.log('name', name);
+        console.log('value', value);
+        
+        switch (name) {
+            case 'chapter-title':
+                return await this.chapterModel.findByIdAndUpdate(_id, {title: value}, {new: true});
+            case 'chapter-detail':
+                return await this.chapterModel.findByIdAndUpdate(_id, {detail: value}, {new: true});
+            default:
+                break;
+        }
+    }
+
     async removeChapter(chapterId: string): Promise<string> {
         await this.chapterModel.findByIdAndDelete(chapterId);
         return chapterId;

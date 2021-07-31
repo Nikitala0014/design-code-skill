@@ -3,18 +3,13 @@ import { useAppSelector } from '../../../../store/store';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import './SubmissionsSection.scss';
 
-import { IChallenge } from '../../../../interfaces/challenge.interface';
 import { SubmissionsHeader } from './SubmissionsHeader';
 import { SubbmissionsBody } from './SubbmissionsBody';
 import { SubmissionDetails } from './SubmissionDetails/SubmissionDetails';
 
-export const SubmissionsSection = () => {
-    let { path } = useRouteMatch();
-    const challengeId = useAppSelector((state) => state.challenges.challengeId);
+export const SubmissionsSection = ({challenge}) => {
+    let { path } = useRouteMatch(); 
     const userId = useAppSelector((state) => state.user.user._id);
-    const challenge: IChallenge = useAppSelector((state) => {
-        return state.challenges.challenges.find((challenge) => challenge._id === challengeId)
-    }) as IChallenge
     const submitedCodeList = challenge.challengeCodeSubmissions?.filter((submission) => {
         return submission.userId === userId;
     })

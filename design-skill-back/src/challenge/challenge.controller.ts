@@ -1,4 +1,15 @@
-import { Controller, Body, Get, Post, Delete, Put, HttpStatus, Param } from '@nestjs/common';
+import { 
+    Controller, 
+    Body, 
+    Get, 
+    Post,
+    Delete, 
+    Put, 
+    HttpStatus, 
+    Param, 
+    UseGuards 
+} from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 import { ChallengeService } from './challenge.service';
 import {
@@ -17,26 +28,38 @@ import { IChallenge } from './interfaces';
 export class ChallengeController {
     constructor(private readonly challengeService: ChallengeService) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get('fetchChallenges/:chapterId')
     async getChallengesByChapterId (
         @Param('chapterId') chapterId: string
     ): Promise<{chapterId: string, challenges: IChallenge[]}> {
         return {
             chapterId: chapterId,
-            challenges: await this.challengeService.gelChallengesByChapterId(chapterId)
+            challenges: await this.challengeService.getChallengesByChapterId(chapterId)
         };
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Get('fetchChallengesByChapterName/:chapterName')
+    async getChallengesByChapterName (
+        @Param('chapterName') chapterName: string
+    ): Promise<IChallenge[]> {
+        return this.challengeService.getChallengesByChapterName(chapterName)
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Post('saveNewChallenge')
     async addChallenge (@Body() createChallengeDto: CreateChallengeDto): Promise<IChallenge> {
         return await this.challengeService.addChallenge(createChallengeDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Post('valideSubmitedCode')
     valideSubmitedCode (@Body() challengeSubmitedCodeDto: ChallengeSubmitedCodeDto) {
         return this.challengeService.valideSubmitedCode(challengeSubmitedCodeDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('saveEditContentProblem/:_id')
     saveEditContentProblem (
         @Param('_id') _id: ChallengeDto["_id"],
@@ -46,6 +69,7 @@ export class ChallengeController {
         return this.challengeService.saveEditContentProblem({_id, contentProblem})
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('saveEditContentCode/:_id')
     saveEditContentCode (
         @Param('_id') _id: ChallengeDto["_id"],
@@ -55,6 +79,7 @@ export class ChallengeController {
         return this.challengeService.saveEditContentCode({_id, contentCode})
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('saveEditContentEditorial/:_id')
     saveEditContentEditorial (
         @Param('_id') _id: ChallengeDto["_id"],
@@ -64,11 +89,23 @@ export class ChallengeController {
         return this.challengeService.saveEditContentEditorial({_id, contentEditorial})
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Put('saveEditChallengeCard/:_id')
+    saveEditChallengeCard(
+        @Param('_id') _id: string,
+        @Body() items: string[]
+    ): Promise<IChallenge> {
+        console.log('work', items)
+        return this.challengeService.saveEditChallengeCard({_id, items});
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Delete('removeChallenge/:_id')
     removeChallenge (@Param('_id') _id: ChallengeDto["_id"]): Promise<HttpStatus> {
         return this.challengeService.removeChallenge(_id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('updateChallengeCard/:_id')
     updateChallengeCard (
         @Param('_id') _id: ChallengeDto["_id"],
@@ -77,6 +114,7 @@ export class ChallengeController {
         return this.challengeService.updateChallengeCard(_id, updateChallengeCardDto);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put('updateChallengesDetails/:_id')
     updateChallengeDetails (
         @Param('_id') _id: ChallengeDto["_id"],

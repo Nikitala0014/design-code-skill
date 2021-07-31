@@ -6,7 +6,9 @@ interface ChallengesProfile {
 }
 
 export const ProfileView = ({challenges}) => {
-    const { bookmarked, solved, attempted } = challenges as ChallengesProfile;
+    const { solved, attempted } = challenges as ChallengesProfile;
+    console.log('attempted', attempted);
+    
     return (
         <div className="profile-container">
             <header className="profile-header flex flex-column">
@@ -18,11 +20,7 @@ export const ProfileView = ({challenges}) => {
                     Одним словом - дерзайте.
                 </div>
             </header>
-            <section className="profile-challenges flex flex-wrap flex-between">
-                <div className="profile-challenges-item bookmarked flex flex-column">
-                    <h1>Bookmarked</h1>
-                    {bookmarked}
-                </div>
+            <section className="profile-challenges flex flex-wrap flex-between flex-column">
                 <div className="profile-challenges-item solved">
                     <h1>Solved</h1>
                     {solved}

@@ -119,6 +119,9 @@ export class Challenge {
     chapterId: string;
 
     @Prop()
+    chapterName: string;
+
+    @Prop()
     title: string;
 
     @Prop()

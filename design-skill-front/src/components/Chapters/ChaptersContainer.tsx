@@ -1,20 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../store/store';
 import './Chapters.style.scss';
 
 import ChapterCard from '../Cards/ChapterCard/ChapterCardContainer';
 import { fetchChapters } from '../../store/reducers/chaptersReducer';
+import { isLogin } from '../../store/reducers/userReducer';
 
+import { UserRoleContext } from '../../Context';
 import { ChaptersView } from './ChaptersView';
 import { IChapter } from '../../interfaces/chapter.interface';
 
 export default function Chapters() {
-    // context
-    const role = useAppSelector((state: RootState) => state.user.user.role);
-    // context
-    // const course = useSelector((state: RootState) => state.chapters.course);
+    const role = useContext(UserRoleContext)
     const chapters = useAppSelector((state: RootState) => state.chapters.chapters);
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        console.log('effect chapters');
+        
+        dispatch(isLogin())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(fetchChapters());

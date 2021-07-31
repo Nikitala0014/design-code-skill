@@ -3,6 +3,7 @@ import { IChallenge } from '../interfaces/challenge.interface';
 export class ChallengeDto {
     readonly _id: string;
     readonly chapterId: string;
+    readonly chapterName: string;
     readonly title: string;
     readonly details: {
         readonly difficulty: string;

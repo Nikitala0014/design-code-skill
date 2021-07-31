@@ -3,6 +3,7 @@ export default function authHeader() {
 
     if(token) {
         const authStr = 'Bearer '.concat(token)
+        
         return { Authorization: authStr }
     } else {
         return {}

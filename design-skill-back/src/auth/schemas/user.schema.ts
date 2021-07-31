@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+import { IUserChallenge } from '../interfaces/user-challenge.interface';
+
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-
-
     @Prop()
     role: string;
 
@@ -17,13 +17,13 @@ export class User {
     password: string;
 
     @Prop()
-    challengesBookmarked?: string[];
+    challengesBookmarked?: IUserChallenge[];
 
     @Prop()
-    challengesSolved?: string[];
+    challengesSolved?: IUserChallenge[];
 
     @Prop()
-    challengesAttempted?: string[];
+    challengesAttempted?: IUserChallenge[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

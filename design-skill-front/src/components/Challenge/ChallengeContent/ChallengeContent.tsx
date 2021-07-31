@@ -10,11 +10,11 @@ import { EditorSection } from '../ChallengeSections/EditorSection';
 import { SubmissionsSection } from '../ChallengeSections/SubmissionsSection/SubmissionsSection';
 import { EditorialSection } from '../ChallengeSections/EditorialSection';
 
-export default function ChallengeContent() {
-    const challengeId = useAppSelector((state) => state.challenges.challengeId);
+export default function ChallengeContent({challengeName}) {
     const challenge = useAppSelector((state) => 
-        state.challenges.challenges.find((challenge) => challenge._id === challengeId)
+        state.challenges.challenges.find((challenge) => challenge.title === challengeName)
     );
+    const { _id } = challenge as IChallenge;
     
     const { 
         contentProblem, 
@@ -31,26 +31,26 @@ export default function ChallengeContent() {
     return (
         <>
             <Switch>
-                <Route exact path={`/interview/:chapter/challenges/:content/problem`}>
+                <Route exact path={`/interview/:chapter/challenges/:challenge_/problem`}>
                     <ProblemSection
                         children={contentProblem}
                         content={problemElement}
-                        challengeId={challengeId}
+                        challengeId={_id}
                     />
                     <EditorSection
-                        challengeId={challengeId}
+                        challengeId={_id}
                         contentCode={contentCode}
                         codeSubmissions={challenge?.challengeCodeSubmissions}
                     />
                 </Route>
                 <Route path={`${path}/submissions`}>
-                    <SubmissionsSection />
+                    <SubmissionsSection challenge={challenge}/>
                 </Route>
-                <Route path={`/interview/:chapter/challenges/:content/editorial`}>
+                <Route path={`/interview/:chapter/challenges/:challenge_/editorial`}>
                     <EditorialSection
                         children={contentEditorial}
                         content={editorialElement}
-                        challengeId={challengeId}
+                        challengeId={_id}
                     />
                 </Route>
             </Switch>

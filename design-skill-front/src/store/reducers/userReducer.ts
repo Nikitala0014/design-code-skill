@@ -5,9 +5,9 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { IUser } from '../../interfaces/user.interface';
-import { IChallenge } from '../../interfaces/challenge.interface';
+import { IUser, IUserChallenge } from '../../interfaces/user.interface';
 import { server } from '../../utils/helper';
+import authHeader from '../../utils/authHeader';
 
 export const createAnAccount = createAsyncThunk('auth/createAnAccount',
 async (payload: {_username: string, _password: string, _role: string}) => {
@@ -31,10 +31,20 @@ async (payload: {_username: string, _password: string}) => {
     .then((data) => data.user);
 })
 
-export const fetchChallengesBookmarked = createAsyncThunk('user/fetchChallengesBookmarked',
-async () => {
-    const response = await fetch('http://localhost:8000/user/challengesBookmarked');
-    return response.text;
+export const isLogin = createAsyncThunk('auth/isLogin',
+    async () => {
+        return await axios.get(`${server.baseUrl}/auth/isLogin`,
+            { headers: authHeader() }
+        ).then((res) => res.data)
+    }
+)
+
+export const fetchUserChallenges = createAsyncThunk('auth/fetchUserChallenges',
+async (userId: string) => {
+    return await axios.get(
+        `${server.baseUrl}/auth/fetchUserChallenges/${userId}`,
+        { headers: authHeader() }
+    ).then((res) => res.data);
 }
 )
 
@@ -44,21 +54,19 @@ const initialState = {
     status: 'loading',
     user: {
         role: 'Root',
-        _id: '1',
-        username: 'Nikita',
+        _id: '',
+        username: '',
     },
-    challengesBookmarked: [] as IChallenge[],
-    challengesSolved: [] as IChallenge[],
-    challengesAttempted: [] as IChallenge[]
+    challengesBookmarked: [] as IUserChallenge[],
+    challengesSolved: [] as IUserChallenge[],
+    challengesAttempted: [] as IUserChallenge[]
 };
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        userLoaded(state, action: PayloadAction<IChallenge[]>) {
-            state.challengesBookmarked = action.payload
-        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -73,14 +81,38 @@ const userSlice = createSlice({
                 return {...state, user: action.payload, loggedIn: true}
             })
             .addCase(logInAccount.rejected, (state, action) => {
+                state.loggedIn = false
                 state.status = 'failed';
                 state.errorMessage = 'Username or password incorrect';
+            })
+            .addCase(isLogin.fulfilled, (
+                state, action: PayloadAction<IUser>
+            ) => {
+                state.loggedIn = true
+                state.user = action.payload;
+            })
+            .addCase(isLogin.rejected, (
+                state, action
+            ) => {
+                state.loggedIn = false
+            })
+            .addCase(fetchUserChallenges.fulfilled, (
+                state, 
+                action: PayloadAction<
+                    {
+                        challengesAttempted: IUserChallenge[], 
+                        challengesSolved: IUserChallenge[]
+                    }
+                >
+            ) => {
+                const { challengesAttempted, challengesSolved } = action.payload;
+                state.challengesAttempted = challengesAttempted;
+                state.challengesSolved = challengesSolved;
+                state.status = 'working'
             })
     }
 })
 
-export const {
-    userLoaded,
-} = userSlice.actions;
+// export const {} = userSlice.actions;
 
 export default userSlice.reducer;

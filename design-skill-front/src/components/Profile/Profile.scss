@@ -34,12 +34,14 @@
 }
 
 .profile-challenges {
-    align-items: stretch;
+    align-items: center;
     width: calc(100% + 24px);
+    margin: 50px auto;
+
 }
 
 .profile-challenges-item {
-    width: 40%;
+    width: 70%;
     margin-left: 12px;
     margin-right: 12px;
     margin-top: 24px;
@@ -53,5 +55,13 @@
         font-size: 1.75rem;
         font-weight: $fwSmall;
         line-height: 2.25rem;
+        margin-bottom: 20px;
+    }
+
+    .challenge-card {
+        margin-left: 0 !important;
+        box-shadow: none !important;
+        background-color: #dadce0 !important;
+        text-align: start !important;
     }
 }

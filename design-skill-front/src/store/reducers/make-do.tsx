@@ -137,6 +137,7 @@ export let challenges: IChallenge[] = [
     {
         _id: '1',
         chapterId: '241421',
+        chapterName: 'Array',
         title: 'Minimum Swaps 2',
         status: 'unsolved',
         details: {
@@ -171,6 +172,7 @@ export let challenges: IChallenge[] = [
     {
         _id: '2',
         chapterId: '3252231',
+        chapterName: 'Array',
         title: '2D Array - DS',
         status: 'unsolved',
         details: {
@@ -205,6 +207,7 @@ export let challenges: IChallenge[] = [
     {
         _id: '3',
         chapterId: '235325',
+        chapterName: 'Array',
         title: 'Array Manipulation',
         status: 'unsolved',
         details: {
@@ -239,6 +242,7 @@ export let challenges: IChallenge[] = [
     {
         _id: 'newChallenge',
         chapterId: '3253251',
+        chapterName: 'Array',
         title: 'Challenge Name',
         status: 'unsolved',
         details: {
