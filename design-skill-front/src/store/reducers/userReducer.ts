@@ -66,9 +66,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        statusIsLoading(state, action) {
-            state.status = 'loading'
-        }
+
     },
     extraReducers: (builder) => {
         builder
@@ -117,8 +115,7 @@ const userSlice = createSlice({
     }
 })
 
-export const {
-    statusIsLoading
-} = userSlice.actions;
+// export const {
+// } = userSlice.actions;
 
 export default userSlice.reducer;

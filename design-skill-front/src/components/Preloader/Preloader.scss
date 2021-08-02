@@ -5,11 +5,11 @@ $yellow: #ffa700;
 $white: #eee;
 
 // scaling... any units
-$width: 100px;
+$width: 50px;
 
 .loader {
   position: relative;
-  margin: 0 auto;
+  margin: 100px auto;
   width: $width;
   &:before {
     content: '';

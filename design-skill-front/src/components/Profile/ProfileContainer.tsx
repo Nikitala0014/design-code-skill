@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import './Profile.scss';
 
-import { fetchUserChallenges, statusIsLoading } from '../../store/reducers/userReducer';
+import { fetchUserChallenges } from '../../store/reducers/userReducer';
 import { ChallengeCardView } from '../Cards/ChallengeCard/ChallengeCardView';
 import { IUserChallenge } from '../../interfaces/user.interface';
 
