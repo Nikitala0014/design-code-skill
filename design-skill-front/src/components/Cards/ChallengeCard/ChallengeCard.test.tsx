@@ -17,11 +17,7 @@ import ChallengeCard from './ChallengeCardContainer';
 test('has correct render challenge card', () => {
     render(
         <ChallengeCard
-            id="array_manipulation"
-            title="Array Manipulation"
-            difficulty="Medium"
-            preview="Max score: 60, Success rate: 56.75%"
-            route="array_manipulation"
+            _id="309170582019940"
         />
     )
     expect(screen.getByRole('heading')).toHaveTextContent('Array Manipulation');

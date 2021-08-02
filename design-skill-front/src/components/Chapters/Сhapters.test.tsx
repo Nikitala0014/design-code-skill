@@ -32,7 +32,7 @@ describe('chapters render', () => {
     it('length list of chapter cards', () => {
         act(() => {
             render(
-                <ChaptersContainer header="interview" />, 
+                <ChaptersContainer />, 
                 container
             )
         })
@@ -42,7 +42,7 @@ describe('chapters render', () => {
     it('title of card to be sorting', () => {
         act(() => {
             render(
-                <ChaptersContainer header="interview" />, 
+                <ChaptersContainer />, 
                 container
             )
         })

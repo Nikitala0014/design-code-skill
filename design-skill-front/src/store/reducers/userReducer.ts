@@ -66,7 +66,9 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-
+        statusIsLoading(state, action) {
+            state.status = 'loading'
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -88,12 +90,14 @@ const userSlice = createSlice({
             .addCase(isLogin.fulfilled, (
                 state, action: PayloadAction<IUser>
             ) => {
-                state.loggedIn = true
+                state.loggedIn = true;
+                state.status = 'working';
                 state.user = action.payload;
             })
             .addCase(isLogin.rejected, (
                 state, action
             ) => {
+                state.status = 'failed';
                 state.loggedIn = false
             })
             .addCase(fetchUserChallenges.fulfilled, (
@@ -113,6 +117,8 @@ const userSlice = createSlice({
     }
 })
 
-// export const {} = userSlice.actions;
+export const {
+    statusIsLoading
+} = userSlice.actions;
 
 export default userSlice.reducer;

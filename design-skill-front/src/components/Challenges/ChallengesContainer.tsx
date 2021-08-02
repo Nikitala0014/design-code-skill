@@ -18,6 +18,7 @@ export default function Challenges() {
     const role = useContext(UserRoleContext);
     let { chapter } = useParams<ChallengesRouteParams>();
     const challenges = useAppSelector((state) => state.challenges.challenges)
+    const status = useAppSelector((state) => state.challenges.status);
     const dispatch = useAppDispatch();
 
     const handleChangeStatus = (e) => e.target.value;
@@ -41,5 +42,6 @@ export default function Challenges() {
         renderedChallengeCards={renderedChallengeCards}
         callbacks={{handleChangeStatus, handleChangeDifficulty}}
         role={role}
+        status={status}
     />
 }

@@ -11,7 +11,8 @@ import { ChaptersView } from './ChaptersView';
 import { IChapter } from '../../interfaces/chapter.interface';
 
 export default function Chapters() {
-    const role = useContext(UserRoleContext)
+    const role = useContext(UserRoleContext);
+    const status = useAppSelector((state) => state.chapters.status);
     const chapters = useAppSelector((state: RootState) => state.chapters.chapters);
     const dispatch = useAppDispatch()
 
@@ -37,5 +38,6 @@ export default function Chapters() {
     return <ChaptersView
         renderedListChapterCard={renderedListChapterCard}
         role={role}
+        status={status}
     />
 }
