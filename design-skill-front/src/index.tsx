@@ -5,15 +5,28 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 import App from './App';
 import store from './store/store';
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
+console.log('domain', domain);
+console.log('clientId', clientId);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <Auth0Provider
+          domain={domain as string}
+          clientId={clientId as string}
+          redirectUri={window.location.origin}
+        >
+          <App />
+        </Auth0Provider>
       </Router>
     </Provider>
   </React.StrictMode>,
